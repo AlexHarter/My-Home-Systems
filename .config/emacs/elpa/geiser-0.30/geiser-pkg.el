@@ -1,0 +1,2 @@
+;; Generated package description from geiser.el  -*- no-byte-compile: t -*-
+(define-package "geiser" "0.30" "GNU Emacs and Scheme talk to each other" '((emacs "27.1") (project "0.8.1")) :commit "f343592a52da0f947989d07c208a51ad6c972a5e" :authors '(("Jose Antonio Ortega Ruiz" . "(jao@gnu.org)")) :maintainer '("Jose Antonio Ortega Ruiz" . "(jao@gnu.org)") :keywords '("languages" "scheme" "geiser") :url "https://gitlab.com/emacs-geiser/")

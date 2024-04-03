@@ -1,0 +1,9 @@
+import = [
+  "~/.config/alacritty/catppuccin-mocha.toml"
+]
+
+[shell]
+program = "fish"
+
+[window]
+opacity = 0.8
