@@ -15,7 +15,7 @@
 
 # Backend:
 # - IPC: dbus
-# - Session Manager: elogind
+# - Session Manager: elogind dbus-elogind polkit-elogind
 # - Networking: NetworkManager
 # Terminal Apps:
 # - Backup: timeshift
