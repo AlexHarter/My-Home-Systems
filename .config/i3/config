@@ -14,7 +14,7 @@ set $term alacritty
 set $app_launcher rofi -show drun
 set $file_manager alacritty -e nnn
 set $browser qutebrowser
-set $compositor picom -f -D 3 --inactive-dim 0.2 --corner-radius 8
+set $compositor picom -f -D 3 --inactive-dim 0.2 --corner-radius 12
 set $emacs emacs
 set $wallpaper feh --bg-scale ~/.config/feh/wallpapers/forests/forest.jpg
 set $steam flatpak run com.valvesoftware.Steam
