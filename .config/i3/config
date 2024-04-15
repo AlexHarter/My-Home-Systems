@@ -10,18 +10,16 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
-set $term alacritty
-set $app_launcher rofi -show drun
-set $file_manager alacritty -e nnn
+set $term wezterm --execute fish
+set $app_launcher lxqt-runner
+set $file_manager pcmanfm-qt
+#set $browser chromium
 set $browser qutebrowser
-set $compositor picom -f -D 3 --inactive-dim 0.2 --corner-radius 12
+set $compositor picom -f -D 3 --inactive-dim 0.2 --corner-radius 8
 set $emacs emacs
-set $wallpaper feh --bg-scale ~/.config/feh/wallpapers/forests/forest.jpg
-set $steam flatpak run com.valvesoftware.Steam
-set $discord flatpak run dev.vencord.Vesktop
 set $obsidian flatpak run md.obsidian.Obsidian
-#set $daw
-set $bar polybar
+#set $yast yast2
+set $ide code
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -49,15 +47,15 @@ bindsym XF86AudioLowerVolume exec --no-startup-id wpctl set-volume 52 10%- && $r
 bindsym XF86AudioMute exec --no-startup-id wpctl set-mute 52 toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id wpctl set-mute 53 toggle && $refresh_i3status
 
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
+bindsym XF86MonBrightnessUp exec --no-startup-id lxqt-config-brightness --increase
+bindsym XF86MonBrightnessDown exec --no-startup-id lxqt-config-brightness --decrease
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # move tiling windows via drag & drop by left-clicking into the title bar,
 # or left-clicking anywhere into the window while holding the floating modifier.
-tiling_drag modifier titlebar
+#tiling_drag modifier titlebar
 
 
 bindsym $mod+q kill
@@ -67,9 +65,9 @@ bindsym $mod+a exec $app_launcher
 bindsym $mod+e exec $emacs
 bindsym $mod+f exec $file_manager
 bindsym $mod+o exec $obsidian
-bindsym $mod+d exec $discord
-bindsym $mod+s exec $steam
 bindsym $mod+b exec $browser
+bindsym $mod+y exec $yast
+bindsym $mod+i exec $ide
 
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -146,8 +144,6 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -215,9 +211,5 @@ gaps inner 10
 gaps outer 10
 gaps top 0
 
-exec --no-startup-id $wallpaper
-exec --no-startup-id $bar &
 exec --no-startup-id $compositor &
-#exec --no-startup-id emacs --daemon
-exec --no-startup-id pipewire &
 exec $obsidian

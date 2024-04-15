@@ -1,0 +1,7 @@
+Machine Name: alex-funbook
+- functions:
+    - Publishing
+    - Music Production
+    - Music Notation
+    - Gaming
+    - Spending time with brothers
