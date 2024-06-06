@@ -1,0 +1,89 @@
+* Machine Name: alex-elitebook
+- Functions:
+  - Data Science
+  - Coding
+    - C
+    - Python
+    - SQL
+  - Job Searching
+  - Family Administration
+  - Document creation
+  - Music creation
+  - Gaming
+
+* OS: Alpine Linux
+** TODO Install Script
+#+BEGIN_SRC
+setup-alpine
+#+END_SRC
+* Applications
+** tty Apps
+*** Shell: [[https://www.zsh.org/][zsh]]
+#+BEGIN_SRC shell
+apk add zsh
+#+END_SRC
+**** Plugin Manager: antigen [[github:zsh-users/antigen][GitHub]]
+#+BEGIN_SRC shell
+curl -L git.io/antigen > antigen.zsh
+#+END_SRC
+*** File Manager: nnn
+#+BEGIN_SRC shell
+apk add nnn
+#+END_SRC
+*** Text Editor: neovim
+#+BEGIN_SRC shell
+apk add neovim
+#+END_SRC
+**** Config
+#+BEGIN_SRC shell
+cp .config/nvim /home/alex/.config/
+*** TODO pomdoro timer
+** Emacs
+#+BEGIN_SRC shell
+apk add emacs-x11-nativecomp
+#+END_SRC
+*** Distribution: doom
+#+BEGIN_SRC shell
+apk add git ripgrep finutils fd # dependencies
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+~/.config/emacs/bin/doom install
+cp .config/doom/ /home/alex/.config/
+#+END_SRC
+** Desktop
+*** Display Server: X
+#+BEGIN_SRC shell
+setup-xorg-base
+#+END_SRC
+*** Window Manager: dwm
+#+BEGIN_SRC shell
+apk add libx11-dev libxft-dev libxinerama-dev # dependencies
+mkdir /home/alex/.suckless/
+cd /home/alex/.suckless/
+git clone https://git.suckless.org/dwm
+#+END_SRC
+*** Application Launcher: dmenu
+*** Terminal Emulator: st
+*** Background Processes
+**** XDG_Desktop
+#+BEGIN_SRC shell
+apk add xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-xapp
+#+END_SRC
+**** Power Management:
+**** Audio: Pipewire
+** Terminal Apps
+*** File Manager
+*** Text Editor
+*** TODO Pomodoro Timer
+** GUI Apps
+*** Web Browser: qutebrowser
+#+BEGIN_SRC shell
+apk add qutebrowser
+#+END_SRC
+*** File Manager: PCManFM-qt
+#+BEGIN_SRC shell
+apk add pcmanfm-qt
+#+END_SRC
+* Flatpaks
+#+BEGIN_SRC shell
+flatpak install flathub dev.vencord.Vesktop com.lutris.Lutris fm.reaper.Reaper
+#+END_SRC
