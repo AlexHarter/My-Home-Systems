@@ -5,44 +5,91 @@
     - C
     - Python
     - SQL
+    - Assembly
   - Job Searching
   - Family Administration
   - Document creation
   - Music creation
   - Gaming
+* Notes
+- [[https:wiki.gentoo.org][Gentoo Wiki]]
 
 * OS: Alpine Linux
 ** TODO Install Script
 #+BEGIN_SRC
 setup-alpine
 #+END_SRC
+* Background
+** Networking: NetworkManager
+- I'm having problems with WiFi disconnecting
+  - maybe I should try bare iwd
+#+BEGIN_SRC shell
+apk add networkmanager networkmanager-wifi
+#+END_SRC
+** Audio: PipeWire
+#+BEGIN_SRC shell
+apk add pipewire pipeiwre-alsa pipewire-pulse pipewire-jack
+#+END_SRC
+** Flatpak
+- XDG-Desktop-Portal is a dependency
+  - According to the Void wiki, the gtk version is a good default choice, but I wonder if xapp is better for me
+#+BEGIN_SRC shell
+apk add xdg-desktop-portal xdg-desktop-portal-xapp xdg-desktop-portal-gtk # Dependencies
+#+END_SRC
+** Power Management
+** RDBMS: [[https://postgresql.org/docs/current][PostgreSQL]]
+- I'm also interested in SQLite
+#+BEGIN_SRC shell
+apk add postgresql
+
 * Applications
 ** tty Apps
-*** Shell: [[https://www.zsh.org/][zsh]]
+*** /Shell:/ [[https://www.zsh.org/][zsh]]
 #+BEGIN_SRC shell
 apk add zsh
 #+END_SRC
-**** Plugin Manager: antigen [[github:zsh-users/antigen][GitHub]]
+**** /Plugin Manager:/ oh-my-zsh
+#+BEGIN_SRC shell
+
+#+END_SRC
+**** OR /Plugin Manager:/ antigen [[github:zsh-users/antigen][GitHub]]
 #+BEGIN_SRC shell
 curl -L git.io/antigen > antigen.zsh
 #+END_SRC
-*** File Manager: nnn
+**** TODO add ~/.local/bin/ to PATH
+*** /Multiplexer:/ tmux
+#+BEGIN_SRC shell
+apk add tmux
+#+END_SRC
+*** /File Manager:/ nnn
+- I've also heard good things about vifm and ranger
 #+BEGIN_SRC shell
 apk add nnn
 #+END_SRC
-*** Text Editor: neovim
+*** /Text Editor:/ neovim
 #+BEGIN_SRC shell
 apk add neovim
 #+END_SRC
 **** Config
 #+BEGIN_SRC shell
+apk add luajit luajit-dev # dependencies
 cp .config/nvim /home/alex/.config/
+#+END_SRC
+*** /Spotify client:/ ncspot
+#+BEGIN_SRC shell
+apk add ncspot
+#+END_SRC
+*** /YouTube client:/ yewtube
+- make sure ~/.local/bin/ is in PATH
+#+BEGIN_SRC shell
+pipx install yewtube
+#+END_SRC
 *** TODO pomdoro timer
 ** Emacs
 #+BEGIN_SRC shell
 apk add emacs-x11-nativecomp
 #+END_SRC
-*** Distribution: doom
+*** /Distribution:/ doom
 #+BEGIN_SRC shell
 apk add git ripgrep finutils fd # dependencies
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
@@ -50,40 +97,48 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 cp .config/doom/ /home/alex/.config/
 #+END_SRC
 ** Desktop
-*** Display Server: X
+*** /Display Server:/ X
 #+BEGIN_SRC shell
 setup-xorg-base
 #+END_SRC
-*** Window Manager: dwm
+*** /Window Manager:/ dwm
 #+BEGIN_SRC shell
-apk add libx11-dev libxft-dev libxinerama-dev # dependencies
+apk add make libx11-dev libxft-dev libxinerama-dev # dependencies
 mkdir /home/alex/.suckless/
 cd /home/alex/.suckless/
 git clone https://git.suckless.org/dwm
 #+END_SRC
-*** Application Launcher: dmenu
-*** Terminal Emulator: st
-*** Background Processes
-**** XDG_Desktop
+*** /Application Launcher:/ dmenu
 #+BEGIN_SRC shell
-apk add xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-xapp
+git clone /home/alex/.suckless/ https://git.suckless.org/dmenu
 #+END_SRC
-**** Power Management:
-**** Audio: Pipewire
-** Terminal Apps
-*** File Manager
-*** Text Editor
-*** TODO Pomodoro Timer
+*** /Terminal Emulator:/ st
+#+BEGIN_SRC shell
+git clone /home/alex/.suckless/ https://git.suckless.org/st
+#+END_SRC
 ** GUI Apps
-*** Web Browser: qutebrowser
+*** /Web Browser:/ qutebrowser
+- I'm currently having problems with it crashing
+  - I wonder if the issue is Alpine or dwm
+    - I could try switching to the Flatpak
 #+BEGIN_SRC shell
 apk add qutebrowser
+ln .config/qutebrowser/config.py ~/.config/qutebrowser/config.py
 #+END_SRC
-*** File Manager: PCManFM-qt
+*** /Web Browser:/ Firefox
+- The Firefox flatpak was the only browsedr that could successfully stream
+  - Maybe LibreWolf could
+*** /DAW:/ Reaper
 #+BEGIN_SRC shell
-apk add pcmanfm-qt
+flatpak install flathub fm.reaper.Reaper
 #+END_SRC
-* Flatpaks
+*** /Gaming Platform:/ Lutris
 #+BEGIN_SRC shell
-flatpak install flathub dev.vencord.Vesktop com.lutris.Lutris fm.reaper.Reaper
+flatpak install flathub com.lutris.Lutris
+#+END_SRC
+*** TODO /Gaming Platform:/ Steam
+*** TODO /Gaming Platform:/ Retroarch
+*** /Discord Client:/ Vesktop
+#+BEGIN_SRC shell
+flatpak install flathub dev.vencord.Vesktop
 #+END_SRC
