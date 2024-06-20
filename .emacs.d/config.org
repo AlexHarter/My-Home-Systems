@@ -50,7 +50,7 @@
   (setq package-enable-at-startup nil)
 #+END_SRC
 ** use-package integration
-#+BEGIN_SRC elisp :tangle ~/.emacs.d/init.el
+#+BEGIN_SRC elisp :tangle /home/alex/.emacs.d/init.el
   (elpaca elpaca-use-package
     (elpaca-use-package-mode))
 #+END_SRC
@@ -74,6 +74,9 @@
     (set-frame-parameter nil 'alpha-background 85)
     (add-to-list 'default-frame-alist '(alpha-background . 85))
 
+    (setq inhibit-startup-message t) 
+    (setq initial-scratch-message nil)
+
     (setq ring-bell-function #'ignore)
 
     ;(menu-bar-mode -1)
@@ -84,7 +87,7 @@
     (setq display-line-numbers 'relative))
 
     (add-to-list 'default-frame-alist
-             '(font . "Iosevka Nerd Font-16"))
+	     '(font . "Iosevka Nerd Font-16"))
 #+END_SRC
 ** theme: catppuccin
 #+BEGIN_SRC elisp :tangle /home/alex/.emacs.d/init.el
@@ -182,7 +185,7 @@
 * coding
 ** TODO C
 ** TODO python
-** TODO jupyter
+*** TODO jupyter
 * publishing
 ** TODO pdf tools?
 ** [[https://jsrjenkins.github.io/gregorio-mode/][gregorio-mode]]
