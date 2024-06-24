@@ -1,6 +1,6 @@
 #+title: Doom Literate Config
 * init
-#+PROPERTY: header-args elisp :tangle yes :tangle ~/.config/doom/init.el
+#+PROPERTY: header-args :tangle yes :tangle ~/.config/doom/init.el
 ;;; init.el -*- lexical-binding: t; -*-
 
 ;; This file controls what Doom modules are enabled and what order they load
@@ -16,7 +16,7 @@
 ;;
 ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle ~/.config/doom/init.el
 (doom! :input
        ;;bidi              ; (tfel ot) thgir etirw uoy gnipleh
        ;;chinese
@@ -199,6 +199,7 @@
 #+END_SRC
 * packages
 #+PROPERTY: header-args elisp :tangle yes :tangle ~/.config/doom/packages.el
+
 -*- no-byte-compile: t; -*-
 $DOOMDIR/packages.el
 To install a package with Doom you must declare them here and run 'doom sync'
@@ -248,12 +249,12 @@ release. The `unpin!' macro allows you to unpin single packages...
 ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 (unpin! t)
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle ~/.config/doom/packages.el
 (package! catppuccin-theme)
 #+END_SRC
 * config
 #+PROPERTY: header-args elisp :tangle yes :tangle ~/.config/doom/config.el
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle ~/.config/doom/config.el
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
@@ -289,10 +290,12 @@ release. The `unpin!' macro allows you to unpin single packages...
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'catppuccin)
+(set-frame-parameter nil 'alpha-background 85)
+(add-to-list 'default-frame-alist '(alpha-background . 85))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type relative)
+(setq display-line-numbers-type 'relative)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
