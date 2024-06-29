@@ -14,7 +14,8 @@
 * Notes
 - [[https:wiki.gentoo.org][Gentoo Wiki]]
 
-* OS: Alpine Linux
+* OS: Alpine
+- TODO switch to Slackware
 ** TODO Install Script
 #+BEGIN_SRC
 setup-alpine

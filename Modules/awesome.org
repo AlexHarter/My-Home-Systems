@@ -1,19 +1,12 @@
 #+title: Awesome
 * xinitrc
-- I think awesome already starts dbus
 #+BEGIN_SRC shell :tangle ~/.xinitrc
-exec awesome
-#+END_SRC
-* autostart
-#+BEGIN_SRC shell :tangle ~/.config/awesome/autostart.sh
-#!/bin/bash
-function run {
-    if ! pgrep $1 ;
-    then
-        $@&
-    fi
-}
-run picom
+exec pipewire &
+exec pipewire-alsa &
+exec pipewire-pulse &
+exec pipewire-jack &
+exec picom &
+exec dbus-run-session awesome
 #+END_SRC
 * rc
 #+BEGIN_SRC lua :tangle ~/.config/awesome/rc.lua

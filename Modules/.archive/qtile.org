@@ -2,6 +2,7 @@
 * .xinitrc
 #+BEGIN_SRC shell :tangle ~/.xinitrc
 exec /usr/libexec/pipewire-launcher &
+exec picom &
 exec dbus-run-session /home/alex/.local/bin/qtile start
 #+END_SRC
 * license
