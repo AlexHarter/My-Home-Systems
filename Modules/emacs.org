@@ -1,4 +1,9 @@
+#+TITLE:emacs literate config
 #+PROPERTY: header-args elisp :tangle yes :tangle ~/.config/emacs/init.el
+* mkdir
+#+BEGIN_SRC shell :tangle no
+mkdir ~/.config/emacs/
+#+END_SRC
 * Setup package manager: [[https://github.com/progfolio/elpaca][elpaca]]
 - other options are package.el (built-in), and straight.el
   - I choose elpaca because it improves on straight, and I want declarative package management
@@ -171,6 +176,8 @@
     :config
     (setq org-directory "~/Family-Notes/")'
     (setq org-startup-folded 'overview))
+    (setq org-todo-keywords
+	  '((sequence "TODO" "DEBUG" "|" "DONE" "WAIT")))
 #+END_SRC
 ** [[https://github.com/minad/org-modern][org-modern]]
 - I could consider mixing with [[https://github.com/rougier/svg-tag-mode][svg-tag-mode]]
@@ -210,6 +217,10 @@
   :defer t
   :hook (org-mode . org-auto-tangle-mode))
 #+END_SRC
+** org-timeblock
+** org-transclusion
+** ob-mermaid
+** openwith-mode
 * coding
 ** TODO C
 ** python

@@ -12,13 +12,10 @@
   - Music creation
   - Gaming
 * Notes
-- [[https:wiki.gentoo.org][Gentoo Wiki]]
 
-* OS: Alpine
-- TODO switch to Slackware
-** TODO Install Script
+* OS: openSUSE Tumbleweed
 #+BEGIN_SRC
-setup-alpine
+
 #+END_SRC
 * Background
 ** Networking: NetworkManager

@@ -1,5 +1,12 @@
 #+TITLE: Wezterm config
 # [[https://wezfurlong.org/wezterm/config/files.html][Docs]]
+* mkdir
+#+BEGIN_SRC shell
+mkdir ~/.config/wezterm/
+#+END_SRC
+
+#+RESULTS:
+
 * wezterm.lua
 #+BEGIN_SRC lua :tangle /home/alex/.config/wezterm/wezterm.lua
 -- Pull in the wezterm API

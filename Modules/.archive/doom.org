@@ -301,6 +301,9 @@ release. The `unpin!' macro allows you to unpin single packages...
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Family-Notes/")
 
+(setq shell-file-name (executable-find "bash"))
+(setq-default vterm-shell (executable-find "fish"))
+
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
