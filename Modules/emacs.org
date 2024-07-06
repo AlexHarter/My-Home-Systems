@@ -130,9 +130,20 @@ mkdir ~/.config/emacs/
     :ensure t
     :demand t
     :config
+    (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
+    (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
     (dashboard-setup-startup-hook)
     (setq dashboard-startup-banner 'logo)
     (setq dashboard-center-content t))
+    (setq dashboard-items '((recents   . 5)
+			    (bookmarks . 5)
+			    (projects  . 5)
+			    (agenda    . 5)
+			    (registers . 5)))
+    (setq dashboard-display-icons-p t)     ; display icons on both GUI and terminal
+    (setq dashboard-icon-type 'nerd-icons) ; use `nerd-icons' package
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-file-icons t)
 #+END_SRC
 ** [[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]
 #+BEGIN_SRC elisp
