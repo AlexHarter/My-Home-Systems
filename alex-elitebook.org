@@ -13,9 +13,56 @@
   - Gaming
 * Notes
 
-* OS: openSUSE Tumbleweed
-#+BEGIN_SRC
-
+* OS: [[https://chimera-linux.org][Chimera Linux]]
+- I choose this because
+  - I like the goal 
+  - I'm interested in helping development
+** Partitioning
+#+BEGIN_SRC shell
+wipefs -a /dev/sda
+cfdisk /dev/sda
+#+END_SRC
+** Filesystems
+#+BEGIN_SRC shell
+  mkfs.btrfs /dev/sda2 # root
+  mkfs.vfat /dev/sda1  # EFI
+  mkswap /dev/sda3     # swap
+#+END_SRC
+** Installing
+*** Mounting
+#+BEGIN_SRC shell
+  # root
+  mkdir /media/root
+  mount /dev/sda2 /media/root
+  chmod 755 /media/root
+  # UEFI
+  mkdir -p /media/root/boot/efi
+  mount /dev/sda1 /media/root/boot/efi
+#+END_SRC
+*** Network Installation
+#+BEGIN_SRC shell
+  chimera-bootstrap /media/root
+  chimera-chroot /media/root
+  apk update
+  apk upgrade --available
+  apk add chimera-repo-contrib
+  apk update
+  apk add linux-lts
+  genfstab / >> /etc/fstab
+  passwd root
+  update-initramfs -c -k all
+  apk add grub-x86_64-efi
+  grub-install /dev/sda
+  update-grub
+#+END_SRC
+** Post-Installation
+#+BEGIN_SRC shell
+useradd alex
+passwd alex
+usermod -a -G wheel,kvm myuser
+echo alex-elitebook > /etc/hostname
+ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
+dinitctl enable syslog-ng
 #+END_SRC
 * Background
 ** Networking: NetworkManager
