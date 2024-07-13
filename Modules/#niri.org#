@@ -1,0 +1,22 @@
+#+TITLE: Niri & Friends Literate Config
+* [[https://github.com/YaLTeR/niri][Niri]]
+#+BEGIN_SRC shell
+
+#+END_SRC
+* Notification Daemon: mako
+#+BEGIN_SRC shell
+dnf install mako
+#+END_SRC
+* Portals
+#+BEGIN_SRC shell
+dnf install xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-keyring
+#+END_SRC
+* Authentication Agent
+#+BEGIN_SRC shell
+dnf install plasma-polit-agent
+systemctl --user edit --full plasma-polkit-agent.service
+#+END_SRC
+* Application Launcher: Fuzzel
+#+BEGIN_SRC shell
+dnf install fuzzel
+#+END_SRC

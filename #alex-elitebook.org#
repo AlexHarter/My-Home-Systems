@@ -96,4 +96,5 @@ flatpak install flathub org.libretro.RetroArch
 #+BEGIN_SRC shell
 flatpak install flathub dev.vencord.Vesktop
 #+END_SRC
+- [ ] https://raw.githubusercontent.com/rose-pine/discord/main/rose-pine.theme.css
 
