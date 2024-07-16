@@ -92,7 +92,7 @@ mkdir ~/.config/emacs/
     (setq display-line-numbers 'relative))
 
     (add-to-list 'default-frame-alist
-	     '(font . "Iosevka Nerd Font-16"))
+	     '(font . "FiraCode Nerd Font-16"))
 #+END_SRC
 ** theme: catppuccin
 #+BEGIN_SRC elisp
