@@ -233,6 +233,14 @@ mkdir ~/.config/emacs/
 ** ob-mermaid
 ** openwith-mode
 * coding
+** Nix
+#+BEGIN_SRC elisp
+(use-package nix-mode
+  :ensure t)
+
+(use-package nixos-options
+  :ensure t)
+#+END_SRC
 ** TODO C
 ** python
 - [[https://github.com/pythonic-emacs/anaconda-mode][anaconda-mode]]

@@ -1,0 +1,23 @@
+#+TITLE: Wezterm config
+# [[https://wezfurlong.org/wezterm/config/files.html][Docs]]
+* mkdir
+#+BEGIN_SRC shell
+mkdir ~/.config/wezterm/
+#+END_SRC
+
+#+RESULTS:
+
+* wezterm.lua
+#+BEGIN_SRC lua :tangle /home/alex/.config/wezterm/wezterm.lua
+-- Pull in the wezterm API
+local wezterm = require 'wezterm'
+jj
+-- This will hold the configuration.
+local config = wezterm.config_builder()
+config.color_scheme = 'Catppuccin Mocha'
+config.hide_tab_bar_if_only_one_tab = true
+config.window_background_opacity = 0.85
+
+-- and finally, return the configuration to wezterm
+return config
+#+END_SRC

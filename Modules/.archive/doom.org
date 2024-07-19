@@ -1,4 +1,9 @@
 #+title: Doom Literate Config
+* installer
+#+BEGIN_SRC shell :tangle no
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+~/.config/emacs/bin/doom install
+#+END_SRC
 * init
 #+PROPERTY: header-args :tangle yes :tangle ~/.config/doom/init.el
 ;;; init.el -*- lexical-binding: t; -*-
@@ -155,7 +160,7 @@
        lua               ; one-based indices? one-based indices
        markdown          ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
-       ;;nix               ; I hereby declare "nix geht mehr!"
+       nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        org               ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
