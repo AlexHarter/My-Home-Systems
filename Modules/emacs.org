@@ -60,6 +60,15 @@ mkdir ~/.config/emacs/
     (elpaca-use-package-mode))
 #+END_SRC
 * customize emacs ui
+** evil mode
+#+BEGIN_SRC elisp
+(use-package evil
+  :ensure t
+  :config
+  (evil-mode 1))
+(use-package evil-org
+  :ensure t)
+#+END_SRC
 ** suppress native comp warning messages
 #+BEGIN_SRC elisp :tangle ~/.config/emacs/early-init.el
   (setq native-comp-async-report-warnings-errors nil)
@@ -92,9 +101,20 @@ mkdir ~/.config/emacs/
     (setq display-line-numbers 'relative))
 
     (add-to-list 'default-frame-alist
-	     '(font . "FiraCode Nerd Font-16"))
+	     '(font . "CaskaydiaCove Nerd Font-16"))
 #+END_SRC
-** theme: catppuccin
+** themes
+*** modus
+#+BEGIN_SRC elisp :tangle no
+(use-package modus-themes
+  :ensure t)
+#+END_SRC
+*** ef
+#+BEGIN_SRC elisp :tangle no
+(use-package ef-themes
+  :ensure t)
+#+END_SRC
+*** catppuccin
 #+BEGIN_SRC elisp
   (use-package catppuccin-theme
     :ensure t
@@ -119,6 +139,12 @@ mkdir ~/.config/emacs/
     :config
     (global-page-break-lines-mode 1))
 #+END_SRC
+** emoji
+#+BEGIN_SRC elisp
+  (use-package emojify
+    :ensure t
+    :hook (after-init . global-emojify-mode))
+#+END_SRC
 ** [[https://github.com/rainstormstudio/nerd-icons.el][nerd-icons]]
 #+BEGIN_SRC elisp
   (use-package nerd-icons
@@ -133,17 +159,18 @@ mkdir ~/.config/emacs/
     (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
     (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
     (dashboard-setup-startup-hook)
-    (setq dashboard-startup-banner 'logo)
-    (setq dashboard-center-content t))
-    (setq dashboard-items '((recents   . 5)
-			    (bookmarks . 5)
-			    (projects  . 5)
-			    (agenda    . 5)
-			    (registers . 5)))
-    (setq dashboard-display-icons-p t)     ; display icons on both GUI and terminal
-    (setq dashboard-icon-type 'nerd-icons) ; use `nerd-icons' package
-    (setq dashboard-set-heading-icons t)
-    (setq dashboard-set-file-icons t)
+    :custom
+    (dashboard-projects-backend 'projectile)
+    (dashboard-startup-banner 'logo)
+    (dashboard-center-content t)
+    (dashboard-items '((bookmarks . 5)
+		       (agenda    . 5)
+		       (projects  . 5)
+		       (recents   . 5)))
+    (dashboard-display-icons-p t)     ; display icons on both GUI and terminal
+    (dashboard-icon-type 'nerd-icons) ; use `nerd-icons' package
+    (dashboard-set-heading-icons t)
+    (dashboard-set-file-icons t))
 #+END_SRC
 ** [[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]
 #+BEGIN_SRC elisp
@@ -173,7 +200,7 @@ mkdir ~/.config/emacs/
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
 #+END_SRC
-* set custom variables
+** set custom variables
 #+BEGIN_SRC elisp
   (setq custom-file (locate-user-emacs-file "custom-vars.el"))
   (load custom-file 'noerror 'nomessage)
@@ -182,13 +209,30 @@ mkdir ~/.config/emacs/
 - make a separate elisp file?
 - do I use use-package for org itself?
 #+BEGIN_SRC elisp
-  (use-package org
-    :ensure nil
-    :config
-    (setq org-directory "~/Family-Notes/")'
-    (setq org-startup-folded 'overview))
-    (setq org-todo-keywords
-	  '((sequence "TODO" "DEBUG" "|" "DONE" "WAIT")))
+    (use-package org
+      :ensure nil
+      :config
+      (setq org-directory "~/Family-Notes/")'
+      (setq org-startup-folded 'overview))
+      (setq org-todo-keywords
+	    '((sequence "TODO" "DEBUG" "|" "DONE" "WAIT")))
+      (setq org-tag-alist
+	    '(;; Places
+	      ("@home" . ?H)
+	      ("@work" . ?W)
+
+	      ;; Devices
+	      ("@computer" . ?C)
+	      ("@phone" . ?P)
+
+	      ;; Activities
+	      ("@planning" . ?n)
+	      ("@programming" . ?p)
+	      ("@music" . ?m)
+	      ("@text" . ?t)
+	      ("@email" . ?e)
+	      ("@call" . ?c)))
+       (setq org-agenda-files '("~/Family-Notes/Personal Management/"))
 #+END_SRC
 ** [[https://github.com/minad/org-modern][org-modern]]
 - I could consider mixing with [[https://github.com/rougier/svg-tag-mode][svg-tag-mode]]
@@ -212,9 +256,16 @@ mkdir ~/.config/emacs/
 	  org-journal-file-type 'daily))
 	  #+END_SRC
 ** [[https://www.orgroam.com/][org-roam]]
-#+BEGIN_SRC elisp
+- I don't think I have a use for org-roam yet
+#+BEGIN_SRC elisp :tangle no
   (use-package org-roam
     :ensure t)
+#+END_SRC
+** TODO denote
+- consider as an alternative to org-roam
+#+BEGIN_SRC elisp
+(use-package denote
+  :ensure t)
 #+END_SRC
 ** [[https://github.com/marcinkoziej/org-pomodoro][org-pomodoro]]
 #+BEGIN_SRC elisp
@@ -222,33 +273,35 @@ mkdir ~/.config/emacs/
     :ensure t)
 #+END_SRC
 ** [[https://github.com/yilkalargaw/org-auto-tangle][org-auto-tangle]]
+- I don't think this is working
 #+BEGIN_SRC elisp
 (use-package org-auto-tangle
   :ensure t
   :defer t
   :hook (org-mode . org-auto-tangle-mode))
 #+END_SRC
-** org-timeblock
+** TODO org-timeblock
+#+BEGIN_SRC elisp :tangle no
+(use-package org-timeblock
+  :ensure t)
+#+END_SRC
 ** org-transclusion
-** ob-mermaid
-** openwith-mode
+#+BEGIN_SRC elisp
+(use-package org-transclusion
+  :ensure t)
+#+END_SRC
+** TODO [[https://github.com/arnm/ob-mermaid][ob-mermaid]]
+** TODO openwith-mode
 * coding
 ** vterm
 #+BEGIN_SRC elisp
 (use-package vterm
   :ensure t)
 #+END_SRC
-** Nix
-#+BEGIN_SRC elisp
-(use-package nix-mode
-  :ensure t)
-
-(use-package nixos-options
-  :ensure t)
-#+END_SRC
 ** TODO C
 ** python
-- [[https://github.com/pythonic-emacs/anaconda-mode][anaconda-mode]]
+- [[https://realpython.com/emacs-the-best-python-editor/][RealPython guide]]
+*** [[https://github.com/pythonic-emacs/anaconda-mode][anaconda-mode]]
 #+BEGIN_SRC elisp
   (use-package anaconda-mode
     :ensure t
@@ -277,4 +330,22 @@ mkdir ~/.config/emacs/
   - can I use use-package for this?
 #+BEGIN_SRC elisp
   (load "lilypond-init.el")
+#+END_SRC
+** TODO [[https://github.com/kaction-emacs/typst-ts-mode][typst]]
+- execute once:
+#+BEGIN_SRC elisp :tangle no
+(add-to-list 'treesit-language-source-alist
+             '(typst "https://github.com/uben0/tree-sitter-typst"))
+(treesit-install-language-grammar 'typst)
+#+END_SRC
+#+BEGIN_SRC elisp
+(use-package typst-ts-mode
+  :ensure (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :files (:defaults "*.el"))
+  :custom
+  ;; don't add "--open" if you'd like `watch` to be an error detector
+  (typst-ts-mode-watch-options "--open")
+  
+  ;; experimental settings (I'm the main dev, so I enable these)
+  (typst-ts-mode-enable-raw-blocks-highlight t)
+  (typst-ts-mode-highlight-raw-blocks-at-startup t))
 #+END_SRC

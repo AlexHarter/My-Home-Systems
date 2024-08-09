@@ -1,39 +1,38 @@
 * /Machine Name:/ alex-elitebook
 ** Functions:
-*** Data Science
-*** Coding
-**** Python
-**** SQL
-**** C
-**** Assembly
-*** Job Searching
-*** Family Administration
-*** Document creation
-*** Music creation
 *** Gaming
-* /OS:/ [[https://fedoraproject.org/workstation/][Fedora Workstation]]
-- I choose this because:
-  - it is well supported
-  - Gnome
-    - I like the workflow
-      - especially with PaperWM
-    - Niri is my favorite WM and it has good synergy with Gnome
-  - release schedule
-  - coprs
-  - stable but up-to-date
-  - I am tempted to try Silverblue
-* Background Processes
-** /RDBMS:/ [[https://postgresql.org/docs/current][PostgreSQL]]
-- Fedora Docs
+- Steam
+- Retroarch
+*** Music
+- Reaper
+* /OS:/ Artix Linux
+- Since this machine is for Gaming and Music, I need a Linux distro with glibc for compatibility
+- AUR
+* Background
+** Fonts
+*** Bitmap Font: [[https://github.com/fcambus/spleen][Spleen]]
 #+BEGIN_SRC shell
-
+yay -S spleen-font
+#+END_SRC
+*** [[https://www.nerdfonts.com/font-downloads][Nerd Font]]: Caskaydia Cove
+#+BEGIN_SRC shell
+unzip ~/Downloads/CascadiaCove.zip -d ~/.local/share/fonts
 #+END_SRC
 * Applications
 ** Terminal Apps
 *** /Shell:/ [[file:Modules/fish.org][Fish]]
-*** /Multiplexer:/ tmux
+- the bros think I should use zsh instead
+- maybe make sure my prompt uses common chracters only for the sake of the tty
 #+BEGIN_SRC shell
-
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+fisher install IlanCosman/tide@v6
+fisher install catppuccin/fish
+fish_config theme save "Catppuccin Mocha"
+#+END_SRC
+*** /Multiplexer:/ zellij
+#+BEGIN_SRC shell
+sudo dnf copr enable varlad/zellij 
+sudo dnf install zellij
 #+END_SRC
 *** /File Manager:/ nnn
 - I've also heard good things about vifm and ranger
@@ -45,11 +44,6 @@ dnf install nnn
   dnf install neovim
   mkdir ~/.config/nvim
 #+END_SRC
-**** Config
-#+BEGIN_SRC shell
-apk add luajit luajit-dev # dependencies
-cp .config/nvim /home/alex/.config/
-#+END_SRC
 *** /Spotify client:/ ncspot
 #+BEGIN_SRC shell
 flatpak install flathub ncspot
@@ -60,25 +54,27 @@ flatpak install flathub ncspot
 pipx install yewtube
 #+END_SRC
 *** TODO pomdoro timer
-** /Desktop Environment:/ [[file:Modules/gnome.org][Gnome]]
-** /Secondary Desktop Environment:/ [[file:Modules/niri.org][Niri]]
+** /Desktop Environement:/ [[file:Modules/hyprland.org][Hyprland]]
 #+BEGIN_SRC shell
-dnf copr enable yalter/niri
+dnf install hyprland
 #+END_SRC
 ** [[file:Modules/emacs.org][Emacs]]
 #+BEGIN_SRC shell
   dnf install emacs
   mkdir ~/.config/emacs/
 #+END_SRC
+** TODO GUI Theme Engines
+*** TODO GTK
+*** TODO Qt
 ** GUI Apps
 *** TODO /Web Browser:/
 - Firefox, LibreWolf, Brave, qutebrowser, Nyxt are all options
 #+BEGIN_SRC shell
-
+dnf install firefox
 #+END_SRC
 *** /DAW:/ Reaper
 #+BEGIN_SRC shell
-flatpak install flathub fm.reaper.Reaper
+  flatpak install flathub fm.reaper.Reaper
 #+END_SRC
 *** /Gaming Platform:/ Lutris
 #+BEGIN_SRC shell
@@ -96,5 +92,3 @@ flatpak install flathub org.libretro.RetroArch
 #+BEGIN_SRC shell
 flatpak install flathub dev.vencord.Vesktop
 #+END_SRC
-- [ ] https://raw.githubusercontent.com/rose-pine/discord/main/rose-pine.theme.css
-
