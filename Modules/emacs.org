@@ -61,7 +61,7 @@ mkdir ~/.config/emacs/
 #+END_SRC
 * customize emacs ui
 ** evil mode
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle no
 (use-package evil
   :ensure t
   :config
@@ -85,17 +85,13 @@ mkdir ~/.config/emacs/
   (use-package emacs
     :ensure nil ; disable elpaca for this expression
     :config
-    (set-frame-parameter nil 'alpha-background 85)
-    (add-to-list 'default-frame-alist '(alpha-background . 85))
+    ;;(set-frame-parameter nil 'alpha-background 85)
+    ;;(add-to-list 'default-frame-alist '(alpha-background . 85))
 
     (setq inhibit-startup-message t) 
     (setq initial-scratch-message nil)
 
     (setq ring-bell-function #'ignore)
-
-    ;(menu-bar-mode -1)
-    ;(tool-bar-mode -1)
-    ;(scroll-bar-mode -1)
 
     (global-display-line-numbers-mode 1)
     (setq display-line-numbers 'relative))
@@ -110,12 +106,12 @@ mkdir ~/.config/emacs/
   :ensure t)
 #+END_SRC
 *** ef
-#+BEGIN_SRC elisp :tangle no
+#+BEGIN_SRC elisp
 (use-package ef-themes
   :ensure t)
 #+END_SRC
 *** catppuccin
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle no
   (use-package catppuccin-theme
     :ensure t
     :demand t
