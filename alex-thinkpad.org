@@ -1,4 +1,4 @@
 * Machine Name: alex-thinkpad
 ** Function: Workstation
-* OS: FreeBSD
+* OS: Artix
 * Desktop: Hyprland

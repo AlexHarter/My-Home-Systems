@@ -59,6 +59,11 @@ mkdir ~/.config/emacs/
   (elpaca elpaca-use-package
     (elpaca-use-package-mode))
 #+END_SRC
+* exwm
+#+BEGIN_SRC elisp
+(use-package exwm
+  :ensure t)
+#+END_SRC
 * customize emacs ui
 ** evil mode
 #+BEGIN_SRC elisp :tangle no

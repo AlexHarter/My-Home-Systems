@@ -1,0 +1,16 @@
+#+TITLE: Artix Install
+- dinit
+- boot directly into Linux
+- [[https://wiki.artixlinux.org/Main/Installation][Wiki]]
+* Partition disk
+#+BEGIN_SRC shell
+  cfdisk /dev/sda
+
+#+END_SRC
+* Format partitions
+#+BEGIN_SRC shell
+mkfs.ext4 -L ROOT /dev/sda2
+mkfs.fat -F 32 /dev/sda1
+fatlabel /dev/sda1 BOOT
+mkswap -L SWAP /dev/sda3
+#+END_SRC
