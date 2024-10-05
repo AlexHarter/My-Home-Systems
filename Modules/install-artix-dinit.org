@@ -14,3 +14,7 @@ mkfs.fat -F 32 /dev/sda1
 fatlabel /dev/sda1 BOOT
 mkswap -L SWAP /dev/sda3
 #+END_SRC
+* efistub
+#+BEGIN_SRC shell
+efibootmgr --create --disk /dev/sdX --part Y --label "Artix Linux" --loader /vmlinuz-linux --unicode 'root=block_device_identifier rw initrd=\initramfs-linux.img'
+#+END_SRC

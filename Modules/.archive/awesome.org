@@ -1,12 +1,14 @@
 #+title: Awesome
 * xinitrc
 #+BEGIN_SRC shell :tangle ~/.xinitrc
-exec pipewire &
-exec pipewire-alsa &
-exec pipewire-pulse &
-exec pipewire-jack &
-exec picom &
-exec dbus-run-session awesome
+  pipewire &
+  pipewire-alsa &
+  pipewire-pulse &
+  pipewire-jack &
+  wireplumber &
+  emacs --daemon &
+  #picom &
+  exec dbus-run-session awesome
 #+END_SRC
 * rc
 #+BEGIN_SRC lua :tangle ~/.config/awesome/rc.lua
@@ -60,8 +62,8 @@ end
 beautiful.init("~/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "wezterm"
-editor = "nvim"
+terminal = "emacsclient -c"
+editor = "helix"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.

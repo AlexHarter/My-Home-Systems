@@ -1,4 +1,0 @@
-* Machine Name: alex-thinkpad
-** Function: Workstation
-* OS: Artix
-* Desktop: Hyprland

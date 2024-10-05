@@ -1,35 +1,16 @@
-#+TITLE: Niri & Friends Literate Config
+#+TITLE: Niri Literate Config
 * [[https://github.com/YaLTeR/niri][Niri]]
-#+BEGIN_SRC shell
+* config.kdl
+#+PROPERTY: header-args kdl :tangle yes :tangle ~/.config/niri/config.kdl
 
-#+END_SRC
-* Notification Daemon: mako
-#+BEGIN_SRC shell
-dnf install mako
-#+END_SRC
-* Portals
-#+BEGIN_SRC shell
-dnf install xdg-desktop-portal-gtk xdg-desktop-portal-gnome gnome-keyring
-#+END_SRC
-* Authentication Agent
-#+BEGIN_SRC shell
-dnf install plasma-polit-agent
-systemctl --user edit --full plasma-polkit-agent.service
-#+END_SRC
-* Application Launcher: Fuzzel
-#+BEGIN_SRC shell
-dnf install fuzzel
-#+END_SRC
-* Config
-#+BEGIN_SRC shell :tangle ~/.config/niri/config.kdl
-// This config is in the KDL format: https://kdl.dev
-// "/-" comments out the following node.
-// Check the wiki for a full description of the configuration:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Overview
+This config is in the KDL format: https://kdl.dev
+"/-" comments out the following node.
+Check the wiki for a full description of the configuration: https://github.com/YaLTeR/niri/wiki/Configuration:-Overview
 
-// Input device configuration.
-// Find the full list of options on the wiki:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Input
+* Input device configuration.
+Find the full list of options on the wiki.
+https://github.com/YaLTeR/niri/wiki/Configuration:-Input
+#+BEGIN_SRC kdl
 input {
     keyboard {
         xkb {
@@ -37,8 +18,9 @@ input {
             // For more information, see xkeyboard-config(7).
 
             // For example:
-            // layout "us,ru"
-            // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
+            //layout "us,uk"
+            layout "us,uk"
+            options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
         }
     }
 
@@ -70,13 +52,15 @@ input {
     // Focus windows and outputs automatically when moving the mouse into them.
     // focus-follows-mouse
 }
-
-// You can configure outputs by their name, which you can find
-// by running `niri msg outputs` while inside a niri instance.
-// The built-in laptop monitor is usually called "eDP-1".
-// Find more information on the wiki:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
-// Remember to uncomment the node by removing "/-"!
+#+END_SRC
+* Outputs
+You can configure outputs by their name, which you can find
+by running `niri msg outputs` while inside a niri instance.
+The built-in laptop monitor is usually called "eDP-1".
+Find more information on the wiki:
+https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
+Remember to uncomment the node by removing "/-"!
+#+BEGIN_SRC kdl
 /-output "eDP-1" {
     // Uncomment this line to disable this output.
     // off
@@ -107,10 +91,12 @@ input {
     // automatically.
     position x=1280 y=0
 }
-
-// Settings that influence how windows are positioned and sized.
-// Find more information on the wiki:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
+#+END_SRC
+* Layout
+Settings that influence how windows are positioned and sized.
+Find more information on the wiki:
+https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
+#+BEGIN_SRC kdl
 layout {
     // Set gaps around windows in logical pixels.
     gaps 16
@@ -217,12 +203,12 @@ layout {
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
-// spawn-at-startup "alacritty" "-e" "fish"
+spawn-at-startup "swaybg --image ~/Files/lewisville_lake.jpg"
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
 // Additionally, clients will be informed that they are tiled, removing some rounded corners.
-// prefer-no-csd
+prefer-no-csd
 
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
@@ -231,10 +217,11 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 // You can also set this to null to disable saving screenshots to disk.
 // screenshot-path null
-
-// Animation settings.
-// The wiki explains how to configure individual animations:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Animations
+#+END_SRC
+* Animation settings.
+The wiki explains how to configure individual animations:
+https://github.com/YaLTeR/niri/wiki/Configuration:-Animations
+#+BEGIN_SRC kdl
 animations {
     // Uncomment to turn off all animations.
     // off
@@ -242,21 +229,12 @@ animations {
     // Slow down all animations by this factor. Values below 1 speed them up instead.
     // slowdown 3.0
 }
-
-// Window rules let you adjust behavior for individual windows.
-// Find more information on the wiki:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
-
-// Work around WezTerm's initial configure bug
-// by setting an empty default-column-width.
-window-rule {
-    // This regular expression is intentionally made as specific as possible,
-    // since this is the default config, and we want no false positives.
-    // You can get away with just app-id="wezterm" if you want.
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
-}
-
+#+END_SRC
+* Window Rules
+Window rules let you adjust behavior for individual windows.
+Find more information on the wiki:
+https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
+#+BEGIN_SRC kd
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
 /-window-rule {
@@ -268,7 +246,9 @@ window-rule {
     // Use this instead if you want them visible on third-party screenshot tools.
     // block-out-from "screencast"
 }
-
+#+END_SRC
+* Keybinds
+#+BEGIN_SRC kdl
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
     // in the end. To find an XKB name for a particular key, you may use a program
@@ -285,8 +265,9 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T { spawn "alacritty"; }
-    Mod+D { spawn "fuzzel"; }
+    Mod+Return { spawn "emacsclient -c"; }
+    Mod+T { spawn "foot"; }
+    Mod+space { spawn "rofi -show drun"; }
     Super+Alt+L { spawn "swaylock"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
@@ -300,7 +281,11 @@ binds {
     XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
-    Mod+Q { close-window; }
+    // Screen Brightness
+    XF86MonBrightnessUp   { spawn "brightnessctl" "set" "+10%"; }
+    XF86MonBrightnessDown { spawn "brightnessctl" "set" "10%-"; }
+
+    Mod+Backspace { close-window; }
 
     Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-down; }

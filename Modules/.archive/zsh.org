@@ -1,0 +1,37 @@
+
+
+
+######## ##     ##    ###     ######   ######
+##       ###   ###   ## ##   ##    ## ##    ##
+##       #### ####  ##   ##  ##       ##
+######   ## ### ## ##     ## ##        ######
+##       ##     ## ######### ##             ##
+##       ##     ## ##     ## ##    ## ##    ##
+######## ##     ## ##     ##  ######   ######
+
+
+Welcome to Emacs!
+
+33 packages loaded in 2.423018 seconds
+
+ Bookmarks:
+    --- No items ---
+
+ Agenda for the coming week:
+    --- No items ---
+
+ Projects: (p)
+     ~/Family-Notes/
+    󱍙 ~/Documents/Harter-Cervantes-Church-Music/
+     ~/Code/gabc-to-ly/
+     ~/Code/My-Home-Systems/
+
+ Recent Files: (r)
+     ~/Family-Notes/Personal Management/20240814T130854--areas-of-focus__main.org
+     ~/Family-Notes/Personal Management/20240815T120633--projects__main.org
+     ~/Documents/Harter-Cervantes-Church-Music/Gigs/2024/07-27-Wedding-Evan_Brianna/REFLECTION.org
+     ~/Family-Notes/Personal Management/20240815T120633--projects__main.org~
+     ~/Family-Notes/Personal Management/Routine.html
+
+
+ Welcome to the church of Emacs

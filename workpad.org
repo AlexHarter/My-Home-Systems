@@ -1,0 +1,5 @@
+* Machine Name: workpad
+** Function: Workstation
+* OS: Artix
+* Desktop: Hyprland
+I think Niri aligns more with what I want, but it's not packaged for Artix

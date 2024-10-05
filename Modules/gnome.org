@@ -1,1 +1,0 @@
-#+TITLE: Gnome Literate Config
