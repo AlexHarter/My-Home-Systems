@@ -6,8 +6,8 @@
   pipewire-pulse &
   pipewire-jack &
   wireplumber &
-  emacs --daemon &
-  #picom &
+  #emacs --daemon &
+  picom &
   exec dbus-run-session awesome
 #+END_SRC
 * rc

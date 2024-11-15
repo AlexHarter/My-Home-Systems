@@ -8,7 +8,7 @@ mkdir ~/.config/wezterm/
 #+RESULTS:
 
 * wezterm.lua
-#+BEGIN_SRC lua :tangle /home/alex/.config/wezterm/wezterm.lua
+#+BEGIN_SRC lua :tangle ~/.config/wezterm/wezterm.lua
 -- Pull in the wezterm API
 local wezterm = require 'wezterm'
 

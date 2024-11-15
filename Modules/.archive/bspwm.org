@@ -1,36 +1,15 @@
 #+TITLE: bspwm literate config
 #+BEGIN_SRC shell :tangle ~/.xinitrc
-    #!/bin/sh
-    # Start the emacs daemon
-    emacs --daemon &
-
-    ## Wait to start successfully
-      while ! pgrep -x "emacs" > /dev/null; do
-	echo "Waiting for Emacs daemon to start..."
-	sleep 1
-    done
-    echo "Emacs daemon has started."
-
-    # Start Pipewire and related services
-    pipewire &
-    pipewire-pulse &
-    wireplumber &
-
-    ## Wait for Pipewire to start successfully
-    while ! pgrep -x "wireplumber" > /dev/null; do
-	echo "Waiting for Pipewire to start..."
-	sleep 1
-    done
-    echo "Pipewire has started."
-
-    # Start Window Manager and related services 
-    feh --bg-fill ~/Files/lewisville_lake.jpg &
-    picom &
-    exec dbus-run-session bspwm # add "--exit-with session"?
+  exec dbus-run-session bspwm # add "--exit-with session"?
   #+END_SRC
 * bspwmrc
 #+BEGIN_SRC shell :tangle ~/.config/bspwm/bspwmrc
   #! /bin/sh
+  pipewire &
+  pipewire-pulse &
+  wireplumber &
+  picom &
+  feh --fill-with-bg ~/.wallpaper.jpg &
 
   pgrep -x sxhkd > /dev/null || sxhkd &
 
@@ -43,6 +22,8 @@
   bspc config borderless_monocle   true
   bspc config gapless_monocle      true
 
+  emacs
+
   #bspc rule -a Gimp desktop='^8' state=floating follow=on
   #bspc rule -a Chromium desktop='^2'
   #bspc rule -a mplayer2 state=floating
@@ -50,15 +31,21 @@
   #bspc rule -a Screenkey manage=off
 
 #+END_SRC
+* bspwm.janet
+#+BEGIN_SRC janet :tangle ~/.config/bspwm/bspwm.janet
+  # the entry point
+  (defn main [&]
+    (print "Hello World from Janet!"))
+#+END_SRC
 * sxhkdrc
-#+BEGIN_SRC shell :tangle ~/.config/sxhkd/sxhkdrc
+#+BEGIN_SRC sxhkdrc :tangle ~/.config/sxhkd/sxhkdrc
   #
   # wm independent hotkeys
   #
 
   # terminal emulator
   super + Return
-	  emacsclient -c --eval '(vterm)'
+	  kitty
   # emacs
   super + e
 	  emacsclient -c --eval '(dashboard-open)'

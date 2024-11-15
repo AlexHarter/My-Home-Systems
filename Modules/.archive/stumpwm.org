@@ -1,0 +1,15 @@
+#+TITLE: StumpWM Literate Config
+https://wiki.archlinux.org/title/Stumpwm
+* Build from source
+** Install sbcl
+#+BEGIN_SRC shell
+  cd /tmp
+  curl -O http://prdownloads.sourceforge.net/sbcl/sbcl-2.4.10-x86-64-linux-binary.tar.bz2
+  bzip2 -cd sbcl-2.4.10-x86-64-linux-binary.tar.bz2 | tar xvf -
+  cd sbcl-2.4.10-x86-linux
+  sh install.sh
+#+END_SRC
+** Install quicklisp
+#+BEGIN_SRC shell
+
+#+END_SRC

@@ -1,27 +1,45 @@
 #+TITLE:emacs literate config
 #+PROPERTY: header-args elisp :tangle yes :tangle ~/.emacs.d/init.el
+#+TODO: TODO DEBUG | WAIT DONE
 * Why Emacs?
 It started with me using Obsidian for notes.  After trying to find an adequately integrated Calendar solution, I quickly found that my true desire was something that could really absorb into itself every part of my digital life so that they can talk to each other.  This is exactly what Emacs does, and there is nothing else quite like it.
 
-Ironically, Neovim is starting to become more Emacs-like, but it is held back by its lack of first-class GUI support.  For example, why would I want to write documents on a platform that can't do variable width fonts?
+Alternative text editor platforms:
+- Neovim
+  - no native GUI
+    - Neovide is a nice GUI for animations
+    - Terminals like kitty have started using hacks to display images
+  - currently more popular than Emacs and is seeing rapid development in its plugin ecosystem
+- Sublime
+  - Closed source
+- VSCode
+  - Electron
+  - Microsoft
+
+Neovim is a constant temptation to me.  Whenever Emacs feels slow or unexpected, I'm attracted to Neovim for being faster and more modern.  But I would be giving up the native GUI, which is legitimately useful to me because of my publishing projects, and the full features of Org Mode.
+
+Ironically, Neovim is starting to become more Emacs-like, but it is held back by its lack of having a native GUI.  For example, it is ideal to write prose on a platform that supports variable width fonts.
 - Some other reasons:
+  - Org Mode is uniquely powerful
   - I like Lisps.
+    - elisp may not be the greatest, but lua is a mess in its own right
   - I like the platform abstraction, i.e. whatever OS or distribution I use in the future, my Emacs will remain constant.
 * Example Configs
 ** [[https://github.com/enzuru/.emacs.d][enzuru]]
 ** [[https://github.com/bbatsov/prelude][Prelude]]
 ** [[https://github.com/SystemCrafters/crafted-emacs][Crafted]]
 ** [[https://github.com/doomemacs/doomemacs][Doom]]
-* Setup package manager: [[https://github.com/progfolio/elpaca][elpaca]]
+* Package Manager: [[https://github.com/progfolio/elpaca][elpaca]]
 - other options are package.el (built-in), and straight.el
   - I choose elpaca because it improves on straight, and I want declarative package management
+    - use-package with package.el might be fine for that, though - elpaca really shines for development
   - I could also use Guix
     - I feel like I should know Scheme first
     - I may not want to be tied to Guix
 - in this document, I could also have shell scripts for system dependencies
 ** install
 #+BEGIN_SRC elisp
-  (defvar elpaca-installer-version 0.7)
+  (defvar elpaca-installer-version 0.8)
   (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
   (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
   (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
@@ -70,6 +88,10 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
     (elpaca-use-package-mode))
 #+END_SRC
 * exwm
+- if using, I think this needs to come early in the config
+- exwm is cool for integration, but if Emacs stalls, so does the WM
+  - stumpwm is a nice middleground, since it can be hacked on from Emacs
+    - I have not been able to get it to run on Artix, though
 #+BEGIN_SRC elisp :tangle no
   (use-package exwm
     :ensure t
@@ -78,19 +100,16 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
     (require 'exwm-config)
     (exwm-config-example))
 #+END_SRC
-* keys
-** evil
-- The cool part about evil is that vi keybindings are widespread in other apps.
-- I do get confused with evil and vanilla keybinds
-#+BEGIN_SRC elisp :tangle no
-  (use-package evil
+* emacs ui
+** keys
+*** which-key
+#+BEGIN_SRC elisp
+  (use-package which-key
     :ensure t
     :config
-    (evil-mode 1))
-  (use-package evil-org
-    :ensure t)
+    (which-key-mode 1))
 #+END_SRC
-** [[https://github.com/meow-edit/meow][meow]]
+*** [[https://github.com/meow-edit/meow][meow]]
 - Modal, but closer to vanilla keybinds
 - Uses noun-verb like Helix and Kakoune, rather than verb-noun like Vim
 #+BEGIN_SRC elisp
@@ -186,15 +205,14 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
     (meow-setup)
     (meow-global-mode 1))
 #+END_SRC
-** TODO hydra
+*** DEBUG hydra
 - Might be useful for LilyPond
   - I could even make a special one for editing Kyivan chant
-#+begin_src elisp
+#+begin_src elisp :tangle no
   (use-package hydra
     :ensure t)
 #+end_src
-* customize emacs ui
-** beacon
+*** beacon
 #+BEGIN_SRC elisp
   (use-package beacon
     :ensure t
@@ -213,16 +231,17 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
   (push '(vertical-scroll-bars) default-frame-alist)
 #+END_SRC
 ** misc built-in ui elements
-*** TODO auto save
 #+BEGIN_SRC elisp
   (use-package emacs
     :ensure nil ; disable elpaca for this expression
     :config
-    (set-frame-parameter nil 'alpha-background 85)
-    (add-to-list 'default-frame-alist '(alpha-background . 85))
+    ;; (set-frame-parameter nil 'alpha-background 85)
+    ;; (add-to-list 'default-frame-alist '(alpha-background . 85))
 
     (add-to-list 'default-frame-alist
-	     '(font . "CaskaydiaCove Nerd Font-16"))
+	     '(font . "FiraCode Nerd Font-16"))
+    (set-face-attribute 'variable-pitch nil :family "Fira Sans" :height 1.2)
+    (set-face-attribute 'fixed-pitch nil :family "FiraCode Nerd Font" :height 160)
 
     (setq inhibit-startup-message t) 
     (setq initial-scratch-message nil)
@@ -230,7 +249,7 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
     (setq ring-bell-function #'ignore)
 
     (global-display-line-numbers-mode 1)
-    (setq display-line-numbers 'relative))
+    (setq display-line-numbers 'relative)) ;; debug
 #+END_SRC
 ** themes
 *** modus
@@ -243,11 +262,10 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
   (use-package ef-themes
     :ensure t
     :demand t
-    :config
-    (load-theme 'ef-rosa t))
+    :config)
 #+END_SRC
 *** catppuccin
-#+BEGIN_SRC elisp :tangle no
+#+BEGIN_SRC elisp
   (use-package catppuccin-theme
     :ensure t
     :demand t
@@ -264,7 +282,7 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
               ("s-p" . projectile-command-map)
               ("C-c p" . projectile-command-map)))
 #+END_SRC
-** [[https://github.com/purcell/page-break-lines][page-break-lines]]
+** DEBUG [[https://github.com/purcell/page-break-lines][page-break-lines]]
 #+BEGIN_SRC elisp
   (use-package page-break-lines
     :ensure t
@@ -272,14 +290,13 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
     (global-page-break-lines-mode 1))
 #+END_SRC
 ** [[https://gitlab.com/jabranham/mixed-pitch][mixed-pitch]]
-*** TODO customize the variable width font
 #+BEGIN_SRC elisp
   (use-package mixed-pitch
     :ensure t
     :hook (org-mode . mixed-pitch-mode))
 #+END_SRC
-** emoji
-*** DEBUG not all emojis are displaying correctly
+** DEBUG emoji
+- not all emojis are displaying correctly
 #+BEGIN_SRC elisp
   (use-package emojify
     :ensure t
@@ -329,7 +346,7 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
 #+END_SRC
 ** DEBUG [[https://github.com/mickeynp/ligature.el][ligature]]
 - appears to work only sometimes
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle no
 (use-package ligature
   :ensure t
   :config
@@ -414,9 +431,9 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
     :ensure nil
     :config
     (setq org-directory "~/Files/")'
-    (setq org-startup-folded t))
-    (setq org-todo-keywords
-	  '((sequence "PROJ-ACT" "TODO" "DEBUG" "|" "PROJ-IN" "WAIT" "PROJ-DONE" "DONE")))
+    (setq org-startup-folded overview))
+    ;; (setq org-todo-keywords
+    ;;        '((sequence "PROJ-ACT" "TODO" "DEBUG" "|" "PROJ-IN" "WAIT" "PROJ-DONE" "DONE")))
     (setq org-tag-alist
 	  '(;; Places
 	    ("@home" . ?H)
@@ -436,6 +453,7 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
      (setq org-agenda-files '("~/Files"))
 #+END_SRC
 ** org-export
+*** TODO typst
 *** DEBUG [[https://orgmode.org/manual/LaTeX-Export.html#LaTeX-export][latex]]
 - ox-latex is built-in to org-mode
   - how should I configure it, then?
@@ -451,13 +469,20 @@ cd ~/.emacs.d/manual-packages
 git clone https://gitlab.com/Titan-C/org-cv.git
 #+END_SRC
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle no
 (use-package ox-moderncv
     :load-path "~/.emacs.d/manual-packages/org-cv/"
     :init (require 'ox-moderncv))
 #+END_SRC
 ** org-babel
-*** lilypond
+#+BEGIN_SRC elisp
+  (use-package org-babel
+    :no-require
+    :ensure nil
+    :config
+    (require 'ob-python)
+    (require 'ob-latex))
+#+END_SRC
 ** [[https://github.com/minad/org-modern][org-modern]]
 - I could consider mixing with [[https://github.com/rougier/svg-tag-mode][svg-tag-mode]]
 #+BEGIN_SRC elisp
@@ -466,8 +491,8 @@ git clone https://gitlab.com/Titan-C/org-cv.git
     :config
     (with-eval-after-load 'org (global-org-modern-mode)))
 #+END_SRC
-** [[https://github.com/bastibe/org-journal][org-journal]]
-#+BEGIN_SRC elisp
+** TODO [[https://github.com/bastibe/org-journal][org-journal]]
+#+BEGIN_SRC elisp :tangle no
   (use-package org-journal
     :ensure t
     :defer t
@@ -477,30 +502,24 @@ git clone https://gitlab.com/Titan-C/org-cv.git
     :config
     (setq org-journal-dir "~/Family-Notes/Journal/Alex/"
 	  org-journal-date-format "%A, %d %B %Y"
-	  org-journal-file-type 'daily))
+	  org-journal-file-type 'weekly))
 	  #+END_SRC
-** [[https://www.orgroam.com/][org-roam]]
-- I don't think I have a use for org-roam yet
-#+BEGIN_SRC elisp :tangle no
-  (use-package org-roam
-    :ensure t)
-#+END_SRC
-** TODO [[https://protesilaos.com/emacs/denote][denote]]
+** [[https://protesilaos.com/emacs/denote][denote]]
 - consider as an alternative to org-roam
 #+BEGIN_SRC elisp
   (use-package denote
     :ensure t
     :config
-    (setq denote-directory "~/Files")
+    (setq denote-directory "~/Files"))
 #+END_SRC
 ** [[https://github.com/marcinkoziej/org-pomodoro][org-pomodoro]]
 #+BEGIN_SRC elisp
   (use-package org-pomodoro
     :ensure t)
 #+END_SRC
-** [[https://github.com/yilkalargaw/org-auto-tangle][org-auto-tangle]]
+** TODO [[https://github.com/yilkalargaw/org-auto-tangle][org-auto-tangle]]
 - I don't think this is working
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle no
   (use-package org-auto-tangle
     :ensure t
     :defer t
@@ -554,21 +573,17 @@ git clone https://gitlab.com/Titan-C/org-cv.git
 ** DEBUG [[https://titan-c.gitlab.io/org-cv/][org-cv]]
 - supports moderncv, awesomecv, and altacv
 - I still love the idea, but I'm having issues getting this to work correctly
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle no
   (use-package ox-altacv
     :ensure (:host gitlab :repo "Titan-C/org-cv"))
 #+END_SRC
 ** obsidian.el
 #+BEGIN_SRC elisp
   (use-package obsidian
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
 * coding
-** vterm
-#+BEGIN_SRC elisp
-  (use-package vterm
-    :ensure t)
-#+END_SRC
 ** TODO C
 ** python
 - there are many python packages for emacs
@@ -584,7 +599,7 @@ git clone https://gitlab.com/Titan-C/org-cv.git
 #+END_SRC
 *** TODO jupyter
 *** hy
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle no
 (use-package hy-mode
   :ensure t)
 #+END_SRC
@@ -593,14 +608,35 @@ git clone https://gitlab.com/Titan-C/org-cv.git
 *** TODO elisp
 *** TODO guile scheme
 - [[https://guix.gnu.org/en/manual/devel/en/html_node/The-Perfect-Setup.html][The Perfect Setup]]
+#+BEGIN_SRC elisp :tangle no
+  (use-package geiser
+    :ensure t)
+  (use-package geiser-guile
+    :ensure t)
+#+END_SRC
 *** TODO common lisp
+#+BEGIN_SRC elisp :tangle no
+  (use-package sly
+    :ensure t)
+#+END_SRC
+** lua
+#+BEGIN_SRC elisp :tangle no
+  (use-package lua-mode
+    :ensure t)
+#+END_SRC
+** janet
+#+BEGIN_SRC elisp :tangle no
+  (use-package janet-mode
+    :ensure t)
+#+END_SRC
 * publishing
 ** tex
 *** auctex
 - Is this already bundled?
 #+BEGIN_SRC elisp
   (use-package auctex
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
 ** [[https://github.com/vedang/pdf-tools][pdf-tools]]
 #+BEGIN_SRC elisp
@@ -609,10 +645,11 @@ git clone https://gitlab.com/Titan-C/org-cv.git
 #+END_SRC
 ** [[https://jsrjenkins.github.io/gregorio-mode/][gregorio-mode]]
 - [[https://gregorio-project.github.io/][gregorio project]]
-  - can I set this to load 
+  - can I set this to lazy load 
 #+BEGIN_SRC elisp
   (use-package gregorio-mode
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
 ** [[http://lilypond.org/][lilypond]]
 - load this elisp because it is provided by the lilypond package rather than an emacs repo
@@ -620,9 +657,19 @@ git clone https://gitlab.com/Titan-C/org-cv.git
   - can I use use-package for this?
 #+BEGIN_SRC elisp
   (use-package lilypond-mode
-    :load-path "site-lisp/lilypond-init")
+    :load-path "site-lisp/lilypond-init"
+    :defer t
+    :config
+    (require 'ob-lilypond))
+#+END_SRC
+** [[https://github.com/mkjunker/abc-mode][abc]]
+#+BEGIN_SRC elisp :tangle no
+  (use-package abc-mode
+    :ensure t
+    :defer t)
 #+END_SRC
 ** TODO [[https://github.com/kaction-emacs/typst-ts-mode][typst]]
+*** typst-ts-mode
 - [X] execute once:
 #+BEGIN_SRC elisp :tangle no
   (add-to-list 'treesit-language-source-alist
@@ -632,16 +679,50 @@ git clone https://gitlab.com/Titan-C/org-cv.git
 #+BEGIN_SRC elisp
   (use-package typst-ts-mode
     :ensure (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :files (:defaults "*.el"))
+    :defer t
     :custom
     ;; don't add "--open" if you'd like `watch` to be an error detector
     (typst-ts-mode-watch-options "--open")
-  
+
     ;; experimental settings (I'm the main dev, so I enable these)
     (typst-ts-mode-enable-raw-blocks-highlight t)
     (typst-ts-mode-highlight-raw-blocks-at-startup t))
 #+END_SRC
+*** [[https://github.com/jmpunkt/ox-typst][ox-typst]]
+#+BEGIN_SRC elisp :tangle no
+
+#+END_SRC
 ** anki
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle no
   (use-package anki-mode
     :ensure t)
+#+END_SRC
+* other
+** DEBUG magit
+#+BEGIN_SRC elisp :tangle no
+  (use-package magit
+    :ensure t)
+#+END_SRC
+** [[https://codeberg.org/akib/emacs-eat][eat]]
+#+BEGIN_SRC elisp
+  (use-package eat
+    :ensure t)
+#+END_SRC
+** vterm
+- this is the fastest one, but I prefer eat for normal use
+#+BEGIN_SRC elisp :tangle no
+  (use-package vterm
+    :ensure t)
+#+END_SRC
+** emms
+#+BEGIN_SRC elisp :tangle no
+  (use-package emms
+    :ensure t)
+#+END_SRC
+* dinit service
+#+BEGIN_SRC shell :tangle ~/.config/dinit.d/emacs
+  type = process
+  command = /usr/bin/emacs --fg-daemon
+  stop-command = /usr/bin/emacsclient --eval "(kill-emacs)"
+  restart = no
 #+END_SRC

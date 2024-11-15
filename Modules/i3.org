@@ -1,20 +1,24 @@
 #+TITLE: i3 literate config
+- [ ] add window swallowing (apps launched form terminal automatically go over the terminal)
+- [ ] add redshift
+- [ ] add battery tool
+- [ ] add keybinds for directly accessing parts of emacs (dired, TODO.org, etc.)
 * .xinitrc
 - [[file:picom.org][picom]]
+- PipeWire and the Emacs daemon are handled by dinit
 #+BEGIN_SRC shell :tangle ~/.xinitrc
-  picom &
-  feh --bg-fill ~/Files/lewisville_lake.jpg
+  #picom &
+  feh --bg-fill ~/.wallpaper.jpg &
   exec dbus-run-session /usr/bin/i3
 #+END_SRC
 * i3
-:PROPERTIES:
-:header-args:  :tangle ~/.config/i3/config
-:END:
+#+PROPERTY: header-args :tangle ~/.config/i3/config
 - [[https://i3wm.org/docs/userguide.html][docs]]
 ** font & colors
 #+BEGIN_SRC shell
-  font pango:CaskaydiaCove Nerd Font 15
-
+  #font pango:FiraCode Nerd Font 16
+  font pango:Fira Sans 16
+  
   set $rosewater #f5e0dc
   set $flamingo #f2cdcd
   set $pink #f5c2e7
@@ -43,6 +47,7 @@
   set $crust #11111b
 #+END_SRC
 ** autostart
+
 #+BEGIN_SRC shell
   # Start XDG autostart .desktop files using dex. See also
   # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -52,19 +57,22 @@
   # they are included here as an example. Modify as you see fit.
 
   #exec --no-startup-id polybar
-  
+
   # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
   # screen before suspend. Use loginctl lock-session to lock your screen.
   exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+  exec emacsclient -c --eval '(dashboard-open)'
 #+END_SRC
 ** keybinds
 #+BEGIN_SRC shell
   set $mod Mod4
-  set $emacs emacsclient -c
-  set $term emacsclient -c --eval '(vterm)'
-  set $fileManager emacsclient -c --eval '(dired)'
+  set $term kitty
+  #set $fileManager emacsclient -c --eval '(dired)'
+  set $fileManager kitty -e "yazi"
   set $browser brave
   set $launcher rofi -show drun
+  set $emacs emacsclient -c --eval '(dashboard-open)'
 
   # Use pactl to adjust volume in PulseAudio.
   set $refresh_i3status killall -SIGUSR1 i3status
@@ -83,22 +91,30 @@
   # or left-clicking anywhere into the window while holding the floating modifier.
   tiling_drag modifier titlebar
 
-  # start an emacs client
-  bindsym $mod+Return exec $emacs
-
   # start a terminal
-  bindsym $mod+t exec $term
+  bindsym $mod+Return exec $term
+
 
   # kill focused window
   bindsym $mod+BackSpace kill
 
-  # start dmenu (a program launcher)
   bindsym $mod+d exec $launcher
-  # A more modern dmenu replacement is rofi:
-  #bindcode $mod+40 exec "rofi -modi drun,run -show drun"
-  # There also is i3-dmenu-desktop which only displays applications shipping a
-  # .desktop file. It is a wrapper around dmenu, so you need that installed.
-  # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
+
+  # emacs bindings
+  set $emacs emacsclient -c
+  ## scratch buffer
+  bindsym $mod+e exec $emacs
+  ## dashboard
+  bindsym $mod+e+d exec $emacs --eval '(dashboard-open)'
+  ## files
+  bindsym $mod+e+f exec $emacs --eval '(dired "~/Files")'
+  ## todo
+  #bindsym $mod+e+t exec $emacs --eval '()'
+  ## terminal
+  bindsym $mod+e+t exec $emacs --eval '(eat)'
+
+
+  bindsym $mod+b exec $browser
 
   bindsym $mod+Left focus left
   bindsym $mod+Down focus down
@@ -123,7 +139,7 @@
   # change container layout (stacked, tabbed, toggle split)
   bindsym $mod+s layout stacking
   bindsym $mod+w layout tabbed
-  bindsym $mod+e layout toggle split
+  #bindsym $mod+e layout toggle split
 
   # toggle tiling / floating
   bindsym $mod+Shift+space floating toggle
@@ -200,11 +216,9 @@
 #+END_SRC
 ** looks
 #+BEGIN_SRC shell
-  smart_gaps on
+  smart_gaps off
   gaps inner 10px
-#+END_SRC
-** bar
-#+BEGIN_SRC shell
+  gaps outer 5px
   # target                 title     bg    text   indicator  border
   client.focused           $lavender $base $text  $rosewater $lavender
   client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
@@ -212,6 +226,10 @@
   client.urgent            $peach    $base $peach $overlay0  $peach
   client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
   client.background        $base
+
+#+END_SRC
+** bar
+#+BEGIN_SRC shell
 
   # bar
   bar {

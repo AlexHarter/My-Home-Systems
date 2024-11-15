@@ -1,5 +1,12 @@
 #+TITLE: picom literate config
-#+BEGIN_SRC shell :tangle ~/.config/picom/picom.conf
+#+PROPERTY: header-args :tangle ~/.config/picom/picom.conf
+* Shadows
+* Opacity
+* Fading
+* Corners
+* Blur
+* General
+#+BEGIN_SRC shell
   #################################
   #             Shadows           #
   #################################
@@ -73,7 +80,7 @@
   fade-out-step = 0.03
 
   # The time between steps in fade step, in milliseconds. (> 0, defaults to 10)
-  fade-delta = 1
+  fade-delta = 10
 
   # Specify a list of conditions of windows that should not be faded.
   # fade-exclude = []
@@ -131,7 +138,7 @@
   # Sets the radius of rounded window corners. When > 0, the compositor will
   # round the corners of windows. Does not interact well with
   # `transparent-clipping`.
-  #corner-radius = 10
+  corner-radius = 10
 
   # Exclude conditions for rounded corners.
   rounded-corners-exclude = [
