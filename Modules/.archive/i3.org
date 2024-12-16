@@ -7,7 +7,7 @@
 - [[file:picom.org][picom]]
 - PipeWire and the Emacs daemon are handled by dinit
 #+BEGIN_SRC shell :tangle ~/.xinitrc
-  #picom &
+  picom &
   feh --bg-fill ~/.wallpaper.jpg &
   exec dbus-run-session /usr/bin/i3
 #+END_SRC
@@ -67,7 +67,7 @@
 ** keybinds
 #+BEGIN_SRC shell
   set $mod Mod4
-  set $term kitty
+  set $term wezterm
   #set $fileManager emacsclient -c --eval '(dired)'
   set $fileManager kitty -e "yazi"
   set $browser brave

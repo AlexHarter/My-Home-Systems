@@ -16,19 +16,18 @@ https://wiki.hyprland.org/Configuring/Configuring-Hyprland/
 ** My Programs
 - https://wiki.hyprland.org/Configuring/Keywords/
 #+BEGIN_SRC hyprlang :tangle ~/.config/hypr/hyprland.conf
-  $terminal = foot
-  $menu = rofi -show drun
-  $emacs = emacsclient -c
+  $terminal = kitty
+  #$menu = rofi -show drun
+  $menu = fuzzel
 #+END_SRC
 ** Autostart
 #+BEGIN_SRC hyprlang :tangle ~/.config/hypr/hyprland.conf
+  env = XDG_CURRENT_DESKTOP, Hyprland
+  env = XDG_SESSION_TYPE, wayland
+  env = XDG_DESSION_DESKTOP, Hyprland
+  exec-once = dbus-update-activation-environment --all
   exec-once = ~/.config/hypr/xdg-desktop-portals-launch.sh
-  exec-once = /usr/bin/pipewire & /usr/bin/pipewire-pulse & /usr/bin/wireplumber
-  exec-once = /usr/bin/hyprpaper & /usr/bin/waybar & /usr/bin/dunst
-  exec-once = emacs --daemon
   exec-once = hyprpaper
-  
-  exec-once = emacsclient -c
 #+END_SRC
 ** Environment Variables
 - See https://wiki.hyprland.org/Configuring/Environment-variables/
@@ -74,10 +73,10 @@ https://wiki.hyprland.org/Configuring/Configuring-Hyprland/
 	active_opacity = 1.0
 	inactive_opacity = 0.8
 
-	drop_shadow = true
-	shadow_range = 4
-	shadow_render_power = 3
-	col.shadow = $base
+       #drop_shadow = true
+       #shadow_range = 4
+       #shadow_render_power = 3
+       #col.shadow = $base
 
 	# https://wiki.hyprland.org/Configuring/Variables/#blur
 	blur {

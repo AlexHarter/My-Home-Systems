@@ -1,12 +1,6 @@
 #+title: Awesome
 * xinitrc
 #+BEGIN_SRC shell :tangle ~/.xinitrc
-  pipewire &
-  pipewire-alsa &
-  pipewire-pulse &
-  pipewire-jack &
-  wireplumber &
-  #emacs --daemon &
   picom &
   exec dbus-run-session awesome
 #+END_SRC
@@ -60,17 +54,15 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("~/.config/awesome/theme.lua")
+-- beautiful.init("~/.config/awesome/themes/catppuccin/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "emacsclient -c"
-editor = "helix"
+terminal = "wezterm"
+editor = "nvim"
 editor_cmd = terminal .. " -e " .. editor
+browser = "brave"
 
 -- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -183,7 +175,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "Obsidian", "Neovim", "Brave", "Spotify", "Discord" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -289,7 +281,19 @@ globalkeys = gears.table.join(
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
-              {description = "open a terminal", group = "launcher"}),
+              {description = "open WezTerm", group = "launcher"}),
+    awful.key({ modkey,           }, "d", function () awful.spawn("rofi -show drun") end,
+              {description = "open Rofi", group = "launcher"}),
+    awful.key({ modkey,           }, "n", function () awful.spawn("neovide") end,
+              {description = "open Neovim", group = "launcher"}),
+    awful.key({ modkey,           }, "b", function () awful.spawn(browser) end,
+              {description = "open Brave", group = "launcher"}),
+    --awful.key({ modkey,           }, "p", function () awful.spawn("wezterm -e ncspot") end,
+    --          {description = "open Spotify", group = "launcher"}),
+    awful.key({ modkey,           }, "o", function () awful.spawn("obsidian") end,
+              {description = "open Obsidian", group = "launcher"}),
+
+
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
@@ -594,7 +598,7 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "sans 8"
+theme.font          = "Fira Sans 16"
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
@@ -680,7 +684,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = "~/Pictures/Lake_Conroe.jpg"
+theme.wallpaper = "~/.wallpaper.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"

@@ -5,11 +5,8 @@
 * bspwmrc
 #+BEGIN_SRC shell :tangle ~/.config/bspwm/bspwmrc
   #! /bin/sh
-  pipewire &
-  pipewire-pulse &
-  wireplumber &
   picom &
-  feh --fill-with-bg ~/.wallpaper.jpg &
+  feh --bg-fill ~/.wallpaper.jpg &
 
   pgrep -x sxhkd > /dev/null || sxhkd &
 
@@ -21,8 +18,6 @@
   bspc config split_ratio          0.6
   bspc config borderless_monocle   true
   bspc config gapless_monocle      true
-
-  emacs
 
   #bspc rule -a Gimp desktop='^8' state=floating follow=on
   #bspc rule -a Chromium desktop='^2'

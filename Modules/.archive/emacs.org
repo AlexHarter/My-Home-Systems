@@ -1,6 +1,8 @@
 #+TITLE:emacs literate config
 #+PROPERTY: header-args elisp :tangle yes :tangle ~/.emacs.d/init.el
 #+TODO: TODO DEBUG | WAIT DONE
+- [ ] config dired
+  - hide-details-mode by default
 * Why Emacs?
 It started with me using Obsidian for notes.  After trying to find an adequately integrated Calendar solution, I quickly found that my true desire was something that could really absorb into itself every part of my digital life so that they can talk to each other.  This is exactly what Emacs does, and there is nothing else quite like it.
 
@@ -205,7 +207,7 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
     (meow-setup)
     (meow-global-mode 1))
 #+END_SRC
-*** DEBUG hydra
+*** DEBUG [[https://github.com/abo-abo/hydra][hydra]]
 - Might be useful for LilyPond
   - I could even make a special one for editing Kyivan chant
 #+begin_src elisp :tangle no
@@ -249,7 +251,12 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
     (setq ring-bell-function #'ignore)
 
     (global-display-line-numbers-mode 1)
-    (setq display-line-numbers 'relative)) ;; debug
+    (setq display-line-numbers-type 'relative)
+
+    (setq backup-directory-alist
+      `(("." . ,(concat user-emacs-directory "backups"))))
+
+    (setq global-visual-line mode t))
 #+END_SRC
 ** themes
 *** modus
@@ -295,8 +302,9 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
     :ensure t
     :hook (org-mode . mixed-pitch-mode))
 #+END_SRC
-** DEBUG emoji
+** DEBUG [[https://github.com/iqbalansari/emacs-emojify][emojify]]
 - not all emojis are displaying correctly
+- :smile:
 #+BEGIN_SRC elisp
   (use-package emojify
     :ensure t
@@ -332,91 +340,91 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
 ** [[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]
 - checkout prism as an alternative
 #+BEGIN_SRC elisp
-(use-package rainbow-delimiters
-  :ensure t
-  :config
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+  (use-package rainbow-delimiters
+    :ensure t
+    :config
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+END_SRC
 ** [[https://github.com/rainstormstudio/nerd-icons-dired][nerd-icons-dired]]
 #+BEGIN_SRC elisp
-(use-package nerd-icons-dired
-  :ensure t
-  :hook
-  (dired-mode . nerd-icons-dired-mode))
+  (use-package nerd-icons-dired
+    :ensure t
+    :hook
+    (dired-mode . nerd-icons-dired-mode))
 #+END_SRC
 ** DEBUG [[https://github.com/mickeynp/ligature.el][ligature]]
 - appears to work only sometimes
-#+BEGIN_SRC elisp :tangle no
-(use-package ligature
-  :ensure t
-  :config
-  ;; Enable the "www" ligature in every possible major mode
-  (ligature-set-ligatures 't '("www"))
-  ;; Enable traditional ligature support in eww-mode, if the
-  ;; `variable-pitch' face supports it
-  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-  ;; Enable all Cascadia and Fira Code ligatures in programming modes
-  (ligature-set-ligatures 'prog-mode
-                        '(;; == === ==== => =| =>>=>=|=>==>> ==< =/=//=// =~
-                          ;; =:= =!=
-                          ("=" (rx (+ (or ">" "<" "|" "/" "~" ":" "!" "="))))
-                          ;; ;; ;;;
-                          (";" (rx (+ ";")))
-                          ;; && &&&
-                          ("&" (rx (+ "&")))
-                          ;; !! !!! !. !: !!. != !== !~
-                          ("!" (rx (+ (or "=" "!" "\." ":" "~"))))
-                          ;; ?? ??? ?:  ?=  ?.
-                          ("?" (rx (or ":" "=" "\." (+ "?"))))
-                          ;; %% %%%
-                          ("%" (rx (+ "%")))
-                          ;; |> ||> |||> ||||> |] |} || ||| |-> ||-||
-                          ;; |->>-||-<<-| |- |== ||=||
-                          ;; |==>>==<<==<=>==//==/=!==:===>
-                          ("|" (rx (+ (or ">" "<" "|" "/" ":" "!" "}" "\]"
-                                          "-" "=" ))))
-                          ;; \\ \\\ \/
-                          ("\\" (rx (or "/" (+ "\\"))))
-                          ;; ++ +++ ++++ +>
-                          ("+" (rx (or ">" (+ "+"))))
-                          ;; :: ::: :::: :> :< := :// ::=
-                          (":" (rx (or ">" "<" "=" "//" ":=" (+ ":"))))
-                          ;; // /// //// /\ /* /> /===:===!=//===>>==>==/
-                          ("/" (rx (+ (or ">"  "<" "|" "/" "\\" "\*" ":" "!"
-                                          "="))))
-                          ;; .. ... .... .= .- .? ..= ..<
-                          ("\." (rx (or "=" "-" "\?" "\.=" "\.<" (+ "\."))))
-                          ;; -- --- ---- -~ -> ->> -| -|->-->>->--<<-|
-                          ("-" (rx (+ (or ">" "<" "|" "~" "-"))))
-                          ;; *> */ *)  ** *** ****
-                          ("*" (rx (or ">" "/" ")" (+ "*"))))
-                          ;; www wwww
-                          ("w" (rx (+ "w")))
-                          ;; <> <!-- <|> <: <~ <~> <~~ <+ <* <$ </  <+> <*>
-                          ;; <$> </> <|  <||  <||| <|||| <- <-| <-<<-|-> <->>
-                          ;; <<-> <= <=> <<==<<==>=|=>==/==//=!==:=>
-                          ;; << <<< <<<<
-                          ("<" (rx (+ (or "\+" "\*" "\$" "<" ">" ":" "~"  "!"
-                                          "-"  "/" "|" "="))))
-                          ;; >: >- >>- >--|-> >>-|-> >= >== >>== >=|=:=>>
-                          ;; >> >>> >>>>
-                          (">" (rx (+ (or ">" "<" "|" "/" ":" "=" "-"))))
-                          ;; #: #= #! #( #? #[ #{ #_ #_( ## ### #####
-                          ("#" (rx (or ":" "=" "!" "(" "\?" "\[" "{" "_(" "_"
-                                       (+ "#"))))
-                          ;; ~~ ~~~ ~=  ~-  ~@ ~> ~~>
-                          ("~" (rx (or ">" "=" "-" "@" "~>" (+ "~"))))
-                          ;; __ ___ ____ _|_ __|____|_
-                          ("_" (rx (+ (or "_" "|"))))
-                          ;; Fira code: 0xFF 0x12
-                          ("0" (rx (and "x" (+ (in "A-F" "a-f" "0-9")))))
-                          ;; Fira code:
-                          "Fl"  "Tl"  "fi"  "fj"  "fl"  "ft"
-                          ;; The few not covered by the regexps.
-                          "{|"  "[|"  "]#"  "(*"  "}#"  "$>"  "^="))
-  ;; Enables ligature checks globally in all buffers. You can also do it
-  ;; per mode with `ligature-mode'.
-  (global-ligature-mode t))
+#+BEGIN_SRC elisp
+  (use-package ligature
+    :ensure t
+    :config
+    ;; Enable the "www" ligature in every possible major mode
+    (ligature-set-ligatures 't '("www"))
+    ;; Enable traditional ligature support in eww-mode, if the
+    ;; `variable-pitch' face supports it
+    (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+    ;; Enable all Cascadia and Fira Code ligatures in programming modes
+    (ligature-set-ligatures 'prog-mode
+			  '(;; == === ==== => =| =>>=>=|=>==>> ==< =/=//=// =~
+			    ;; =:= =!=
+			    ("=" (rx (+ (or ">" "<" "|" "/" "~" ":" "!" "="))))
+			    ;; ;; ;;;
+			    (";" (rx (+ ";")))
+			    ;; && &&&
+			    ("&" (rx (+ "&")))
+			    ;; !! !!! !. !: !!. != !== !~
+			    ("!" (rx (+ (or "=" "!" "\." ":" "~"))))
+			    ;; ?? ??? ?:  ?=  ?.
+			    ("?" (rx (or ":" "=" "\." (+ "?"))))
+			    ;; %% %%%
+			    ("%" (rx (+ "%")))
+			    ;; |> ||> |||> ||||> |] |} || ||| |-> ||-||
+			    ;; |->>-||-<<-| |- |== ||=||
+			    ;; |==>>==<<==<=>==//==/=!==:===>
+			    ("|" (rx (+ (or ">" "<" "|" "/" ":" "!" "}" "\]"
+					    "-" "=" ))))
+			    ;; \\ \\\ \/
+			    ("\\" (rx (or "/" (+ "\\"))))
+			    ;; ++ +++ ++++ +>
+			    ("+" (rx (or ">" (+ "+"))))
+			    ;; :: ::: :::: :> :< := :// ::=
+			    (":" (rx (or ">" "<" "=" "//" ":=" (+ ":"))))
+			    ;; // /// //// /\ /* /> /===:===!=//===>>==>==/
+			    ("/" (rx (+ (or ">"  "<" "|" "/" "\\" "\*" ":" "!"
+					    "="))))
+			    ;; .. ... .... .= .- .? ..= ..<
+			    ("\." (rx (or "=" "-" "\?" "\.=" "\.<" (+ "\."))))
+			    ;; -- --- ---- -~ -> ->> -| -|->-->>->--<<-|
+			    ("-" (rx (+ (or ">" "<" "|" "~" "-"))))
+			    ;; *> */ *)  ** *** ****
+			    ("*" (rx (or ">" "/" ")" (+ "*"))))
+			    ;; www wwww
+			    ("w" (rx (+ "w")))
+			    ;; <> <!-- <|> <: <~ <~> <~~ <+ <* <$ </  <+> <*>
+			    ;; <$> </> <|  <||  <||| <|||| <- <-| <-<<-|-> <->>
+			    ;; <<-> <= <=> <<==<<==>=|=>==/==//=!==:=>
+			    ;; << <<< <<<<
+			    ("<" (rx (+ (or "\+" "\*" "\$" "<" ">" ":" "~"  "!"
+					    "-"  "/" "|" "="))))
+			    ;; >: >- >>- >--|-> >>-|-> >= >== >>== >=|=:=>>
+			    ;; >> >>> >>>>
+			    (">" (rx (+ (or ">" "<" "|" "/" ":" "=" "-"))))
+			    ;; #: #= #! #( #? #[ #{ #_ #_( ## ### #####
+			    ("#" (rx (or ":" "=" "!" "(" "\?" "\[" "{" "_(" "_"
+					 (+ "#"))))
+			    ;; ~~ ~~~ ~=  ~-  ~@ ~> ~~>
+			    ("~" (rx (or ">" "=" "-" "@" "~>" (+ "~"))))
+			    ;; __ ___ ____ _|_ __|____|_
+			    ("_" (rx (+ (or "_" "|"))))
+			    ;; Fira code: 0xFF 0x12
+			    ("0" (rx (and "x" (+ (in "A-F" "a-f" "0-9")))))
+			    ;; Fira code:
+			    "Fl"  "Tl"  "fi"  "fj"  "fl"  "ft"
+			    ;; The few not covered by the regexps.
+			    "{|"  "[|"  "]#"  "(*"  "}#"  "$>"  "^="))
+    ;; Enables ligature checks globally in all buffers. You can also do it
+    ;; per mode with `ligature-mode'.
+    (global-ligature-mode t))
 #+END_SRC
 ** set custom variables
 #+BEGIN_SRC elisp
@@ -424,6 +432,7 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
   (load custom-file 'noerror 'nomessage)
 #+END_SRC
 * [[https://orgmode.org/][org]]
+- [ ] set text to wrap in this mode
 - make a separate elisp file?
 - do I use use-package for org itself?
 #+BEGIN_SRC elisp
@@ -464,15 +473,15 @@ Ironically, Neovim is starting to become more Emacs-like, but it is held back by
 *** cv
 - Execute once:
 #+BEGIN_SRC shell :tangle no
-mkdir ~/.emacs.d/manual-packages/
-cd ~/.emacs.d/manual-packages
-git clone https://gitlab.com/Titan-C/org-cv.git
+  mkdir ~/.emacs.d/manual-packages/
+  cd ~/.emacs.d/manual-packages
+  git clone https://gitlab.com/Titan-C/org-cv.git
 #+END_SRC
 
 #+BEGIN_SRC elisp :tangle no
-(use-package ox-moderncv
-    :load-path "~/.emacs.d/manual-packages/org-cv/"
-    :init (require 'ox-moderncv))
+  (use-package ox-moderncv
+      :load-path "~/.emacs.d/manual-packages/org-cv/"
+      :init (require 'ox-moderncv))
 #+END_SRC
 ** org-babel
 #+BEGIN_SRC elisp
@@ -528,7 +537,7 @@ git clone https://gitlab.com/Titan-C/org-cv.git
 ** TODO org-timeblock
 #+BEGIN_SRC elisp :tangle no
   (use-package org-timeblock
-    :ensure t)  
+    :ensure t)
 #+END_SRC
 ** org-transclusion
 #+BEGIN_SRC elisp
@@ -539,7 +548,7 @@ git clone https://gitlab.com/Titan-C/org-cv.git
 ** TODO openwith-mode
 - useful if I want to open a file from emacs that emacs can't display properly, e.g. mp4 or html
 - I may also want to use this to open code where I'd rather use a specialized tool, e.g. Frescobaldi for LilyPond
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle no
   (use-package openwith
     :ensure t
     :config
@@ -578,6 +587,7 @@ git clone https://gitlab.com/Titan-C/org-cv.git
     :ensure (:host gitlab :repo "Titan-C/org-cv"))
 #+END_SRC
 ** obsidian.el
+- Use this for dealing with Alma's notes
 #+BEGIN_SRC elisp
   (use-package obsidian
     :ensure t
@@ -597,11 +607,16 @@ git clone https://gitlab.com/Titan-C/org-cv.git
     :config
     (add-hook 'python-mode-hook 'anaconda-mode))
 #+END_SRC
+*** cython
+#+BEGIN_SRC elisp
+  (use-package cython-mode
+    :ensure t)
+#+END_SRC
 *** TODO jupyter
 *** hy
 #+BEGIN_SRC elisp :tangle no
-(use-package hy-mode
-  :ensure t)
+  (use-package hy-mode
+    :ensure t)
 #+END_SRC
 ** lisps
 - grouping these because they share a lot
@@ -658,7 +673,7 @@ git clone https://gitlab.com/Titan-C/org-cv.git
 #+BEGIN_SRC elisp
   (use-package lilypond-mode
     :load-path "site-lisp/lilypond-init"
-    :defer t
+    :demand t
     :config
     (require 'ob-lilypond))
 #+END_SRC
@@ -669,28 +684,26 @@ git clone https://gitlab.com/Titan-C/org-cv.git
     :defer t)
 #+END_SRC
 ** TODO [[https://github.com/kaction-emacs/typst-ts-mode][typst]]
-*** typst-ts-mode
-- [X] execute once:
-#+BEGIN_SRC elisp :tangle no
-  (add-to-list 'treesit-language-source-alist
-	       '(typst "https://github.com/uben0/tree-sitter-typst"))
-  (treesit-install-language-grammar 'typst)
-#+END_SRC
+*** [[https://codeberg.org/meow_king/typst-ts-mode][typst-ts-mode]]
 #+BEGIN_SRC elisp
   (use-package typst-ts-mode
-    :ensure (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :files (:defaults "*.el"))
-    :defer t
+    :ensure (:type git :host codeberg :repo "meow_king/typst-ts-mode" :branch "develop"
+		   :files (:defaults "*.el"))
     :custom
-    ;; don't add "--open" if you'd like `watch` to be an error detector
-    (typst-ts-mode-watch-options "--open")
-
-    ;; experimental settings (I'm the main dev, so I enable these)
+    (typst-ts-watch-options "--open")
+    (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory))
     (typst-ts-mode-enable-raw-blocks-highlight t)
-    (typst-ts-mode-highlight-raw-blocks-at-startup t))
+    :config
+    (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu))
+#+END_SRC
+- [X] execute once after installation:
+#+BEGIN_SRC elisp :tangle no
+  (typst-ts-mc-install-grammar)
 #+END_SRC
 *** [[https://github.com/jmpunkt/ox-typst][ox-typst]]
 #+BEGIN_SRC elisp :tangle no
-
+  (use-package ox-typst
+    :ensure (:type git :host github :repo "jmpunkt/ox-typst")
 #+END_SRC
 ** anki
 #+BEGIN_SRC elisp :tangle no
@@ -699,8 +712,11 @@ git clone https://gitlab.com/Titan-C/org-cv.git
 #+END_SRC
 * other
 ** DEBUG magit
-#+BEGIN_SRC elisp :tangle no
+#+BEGIN_SRC elisp
   (use-package magit
+    :ensure t)
+  ;; requires transient to be up-to-date
+  (use-package transient
     :ensure t)
 #+END_SRC
 ** [[https://codeberg.org/akib/emacs-eat][eat]]
@@ -709,7 +725,7 @@ git clone https://gitlab.com/Titan-C/org-cv.git
     :ensure t)
 #+END_SRC
 ** vterm
-- this is the fastest one, but I prefer eat for normal use
+- this is the fastest one, but I think I prefer eat for normal use
 #+BEGIN_SRC elisp :tangle no
   (use-package vterm
     :ensure t)
