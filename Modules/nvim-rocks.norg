@@ -1,0 +1,205 @@
+@document.meta
+title: nvim-rocks
+description: 
+authors: alex
+categories: 
+created: 2024-12-19T14:32:16-0600
+updated: 2024-12-19T14:36:27-0600
+version: 1.1.1
+@end
+
+* Setup rock.nvim
+
+https://github.com/nvim-neorocks/rocks.nvim
+
+@quote
+- An up-to-date Neovim >= 0.10 installation.
+- The git command line utility.
+- wget or curl (if running on a UNIX system) - required for the remote :source command to work.
+- make and unzip (if you want the install/bootstrap script to install luarocks).
+- netrw enabled in your Neovim configuration - enabled by default but some configurations manually disable the plugin.
+- A lua 5.1 or luajit installation, including headers (for installing native libraries). Note that luarocks expects to be able to run Lua(jit) using the lua command.
+@end
+
+@code sh
+nvim -u NORC -c "source https://raw.githubusercontent.com/nvim-neorocks/rocks.nvim/master/installer.lua"
+@end
+
+@code lua
+local rocks_config = {
+    rocks_path = vim.env.HOME .. "/.local/share/nvim/rocks",
+}
+
+vim.g.rocks_nvim = rocks_config
+
+local luarocks_path = {
+    vim.fs.joinpath(rocks_config.rocks_path, "share", "lua", "5.1", "?.lua"),
+    vim.fs.joinpath(rocks_config.rocks_path, "share", "lua", "5.1", "?", "init.lua"),
+}
+package.path = package.path .. ";" .. table.concat(luarocks_path, ";")
+
+local luarocks_cpath = {
+    vim.fs.joinpath(rocks_config.rocks_path, "lib", "lua", "5.1", "?.so"),
+    vim.fs.joinpath(rocks_config.rocks_path, "lib64", "lua", "5.1", "?.so"),
+    -- Remove the dylib and dll paths if you do not need macos or windows support
+    vim.fs.joinpath(rocks_config.rocks_path, "lib", "lua", "5.1", "?.dylib"),
+    vim.fs.joinpath(rocks_config.rocks_path, "lib64", "lua", "5.1", "?.dylib"),
+    vim.fs.joinpath(rocks_config.rocks_path, "lib", "lua", "5.1", "?.dll"),
+    vim.fs.joinpath(rocks_config.rocks_path, "lib64", "lua", "5.1", "?.dll"),
+}
+package.cpath = package.cpath .. ";" .. table.concat(luarocks_cpath, ";")
+
+vim.opt.runtimepath:append(vim.fs.joinpath(rocks_config.rocks_path, "lib", "luarocks", "rocks-5.1", "*", "*"))
+@end
+
+* Neorg
+@code nvim
+:Rocks install rocks-config.nvim
+:Rocks install neorg
+@end
+
+@code sh
+mkdir ~/.config/nvim/lua/plugins/
+echo "require(\"neorg\").setup()" > ~/.config/nvim/lua/plugins/neorg.lua
+@end
+
+@code nvim
+:Rocks install rocks-git.nvim
+:Rocks install nvim-treesitter/nvim-treesitter
+@end
+
+#tangle ~/.config/nvim/lua/plugins/treesitter.lua
+@code lua
+require("nvim-treesitter.configs").setup({
+  highlight = {
+    enable = true,
+  },
+})
+@end
+* LilyPond-Suite
+
+#tangle ~/.config/nvim/lua/plugins/lilypond-suite.lua
+@code lua
+require('nvls').setup({
+	lilypond = {
+		mappings = {
+			player = "<F3>",
+			compile = "<F5>",
+			open_pdf = "<F6>",
+			switch_buffers = "<A-Space>",
+			insert_version = "<F4>",
+			hyphenation = "<F12>",
+			hyphenation_change_lang = "<F11>",
+			insert_hyphen = "<leader>ih",
+			add_hyphen = "<leader>ah",
+			del_next_hyphen = "<leader>dh",
+			del_prev_hyphen = "<leader>dH",
+		},
+		options = {
+			pitches_language = "default",
+			hyphenation_language = "en_DEFAULT",
+			output = "pdf",
+			backend = nil,
+			main_file = "main.ly",
+			main_folder = "%:p:h",
+			include_dir = nil,
+			diagnostics = false,
+			pdf_viewer = nil,
+		},
+	},
+	latex = {
+
+		mappings = {
+
+			compile = "<F5>",
+
+			open_pdf = "<F6>",
+
+			lilypond_syntax = "<F3>"
+
+		},
+
+		options = {
+
+
+			lilypond_book_flags = nil,
+
+			clean_logs = false,
+
+			main_file = "main.tex",
+
+			main_folder = "%:p:h",
+
+			include_dir = nil,
+
+			lilypond_syntax_au = "BufEnter",
+
+			pdf_viewer = nil,
+
+		},
+
+	},
+
+	texinfo = {
+
+		mappings = {
+
+			compile = "<F5>",
+
+			open_pdf = "<F6>",
+
+			lilypond_syntax = "<F3>"
+
+		},
+
+		options = {
+
+			lilypond_book_flags = "--pdf",
+
+			clean_logs = false,
+
+			main_file = "main.texi",
+
+			main_folder = "%:p:h",
+
+			lilypond_syntax_au = "BufEnter",
+
+			pdf_viewer = nil,
+
+        },
+      },
+      player = {
+        mappings = {
+          quit = "q",
+          play_pause = "p",
+          loop = "<A-l>",
+          backward = "h",
+          small_backward = "<S-h>",
+          forward = "l",
+          small_forward = "<S-l>",
+          decrease_speed = "j",
+          increase_speed = "k",
+          halve_speed = "<S-j>",
+          double_speed = "<S-k>"
+        },
+        options = {
+          row = 1,
+          col = "99%",
+          width = "37",
+          height = "1",
+          border_style = "single",
+          winhighlight = "Normal:Normal,FloatBorder:Normal",
+          midi_synth = "fluidsynth",
+          fluidsynth_flags = nil,
+          timidity_flags = nil,
+          audio_format = "mp3",
+          mpv_flags = {
+            "--msg-level=cplayer=no,ffmpeg=no,alsa=no",
+            "--loop",
+            "--config-dir=/dev/null"
+          }
+        },
+      },
+})
+@end
+
