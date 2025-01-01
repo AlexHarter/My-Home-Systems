@@ -1,15 +1,11 @@
 #+TITLE: Neovim config
-* mkdir
-#+BEGIN_SRC sh :tangle no
-  mkdir ~/.config/nvim/
-  mkdir ~/.config/nvim/lua/
-  mkdir ~/.config/nvim/lua/custom/
-  mkdir ~/.config/nvim/lua/custom/plugins/
-  mkdir ~/.config/nvim/lua/kickstart/
-  mkdir ~/.config/nvim/lua/kickstart/plugins
-#+END_SRC
-
 # from [[https://github.com/nvim-lua/kickstart.nvim][kickstart.nvim]]
+* bootstrap
+#+BEGIN_SRC sh :tangle no
+  mkdir -p ~/.config/nvim/lua/custom/plugins/
+  mkdir -p ~/.config/nvim/lua/kickstart/plugins
+  emacs --eval '(org-babel-tangle ~/Projects/My-Home-Systems/Modules/nvim-lazy.org)'
+#+END_SRC
 
 * init.lua
 #+BEGIN_SRC lua :tangle ~/.config/nvim/init.lua
