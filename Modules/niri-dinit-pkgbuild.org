@@ -152,7 +152,6 @@
     pango
     pixman
     seatd
-    #systemd-libs
     xdg-desktop-portal-impl
   )
   makedepends=(

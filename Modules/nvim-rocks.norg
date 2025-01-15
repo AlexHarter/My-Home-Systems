@@ -4,11 +4,11 @@ description:
 authors: alex
 categories: 
 created: 2024-12-19T14:32:16-0600
-updated: 2024-12-19T14:36:27-0600
+updated: 2025-01-14T05:00:08-0600
 version: 1.1.1
 @end
 
-* Setup rock.nvim
+* Setup rocks.nvim
 
 https://github.com/nvim-neorocks/rocks.nvim
 

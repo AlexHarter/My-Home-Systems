@@ -5,7 +5,7 @@
 - [ ] add keybinds for directly accessing parts of emacs (dired, TODO.org, etc.)
 * .xinitrc
 - [[file:picom.org][picom]]
-- PipeWire (and the Emacs daemon) are handled by dinit
+- PipeWire are handled by dinit
 #+BEGIN_SRC sh :tangle ~/.xinitrc
   picom &
   feh --bg-fill ~/.wallpaper.jpg &
@@ -67,12 +67,10 @@
 ** keybinds
 #+BEGIN_SRC sh
   set $mod Mod4
-  set $term ghostty
+  set $term kitty
   #set $fileManager emacsclient -c --eval '(dired)'
-  set $fileManager ghostty -e "yazi"
   set $browser brave
   set $launcher rofi -show drun
-  #set $emacs emacsclient -c --eval '(dashboard-open)'
 
   # Use pactl to adjust volume in PulseAudio.
   set $refresh_i3status killall -SIGUSR1 i3status
@@ -100,21 +98,9 @@
 
   bindsym $mod+d exec $launcher
 
-  # emacs bindings
-  set $emacs emacsclient -c
-  ## scratch buffer
-  bindsym $mod+e exec $emacs
-  ## dashboard
-  bindsym $mod+e+d exec $emacs --eval '(dashboard-open)'
-  ## files
-  bindsym $mod+e+f exec $emacs --eval '(dired "~/Files")'
-  ## todo
-  #bindsym $mod+e+t exec $emacs --eval '()'
-  ## terminal
-  bindsym $mod+e+t exec $emacs --eval '(eat)'
-
-
   bindsym $mod+b exec $browser
+
+  bindsym $mod+o exec obsidian
 
   bindsym $mod+Left focus left
   bindsym $mod+Down focus down
@@ -215,7 +201,7 @@
 
 #+END_SRC
 ** looks
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
   smart_gaps off
   gaps inner 10px
   gaps outer 5px
@@ -229,8 +215,7 @@
 
 #+END_SRC
 ** bar
-#+BEGIN_SRC shell
-
+#+BEGIN_SRC sh
   # bar
   bar {
     colors {

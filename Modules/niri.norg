@@ -1,7 +1,9 @@
-#+TITLE: Niri Literate Config
+@document.meta
+title: Niri Literate Config
+tangle: ~/.config/niri/config.kdl
+@end
 * [[https://github.com/YaLTeR/niri][Niri]]
 * config.kdl
-#+PROPERTY: header-args kdl :tangle yes :tangle ~/.config/niri/config.kdl
 
 This config is in the KDL format: https://kdl.dev
 "/-" comments out the following node.
@@ -10,7 +12,7 @@ Check the wiki for a full description of the configuration: https://github.com/Y
 * Input device configuration.
 Find the full list of options on the wiki.
 https://github.com/YaLTeR/niri/wiki/Configuration:-Input
-#+BEGIN_SRC kdl
+@code kdl
 input {
     keyboard {
         xkb {
@@ -52,7 +54,7 @@ input {
     // Focus windows and outputs automatically when moving the mouse into them.
     // focus-follows-mouse
 }
-#+END_SRC
+@end
 * Outputs
 You can configure outputs by their name, which you can find
 by running `niri msg outputs` while inside a niri instance.
@@ -60,7 +62,7 @@ The built-in laptop monitor is usually called "eDP-1".
 Find more information on the wiki:
 https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 Remember to uncomment the node by removing "/-"!
-#+BEGIN_SRC kdl
+@code kdl
 /-output "eDP-1" {
     // Uncomment this line to disable this output.
     // off
@@ -91,12 +93,12 @@ Remember to uncomment the node by removing "/-"!
     // automatically.
     position x=1280 y=0
 }
-#+END_SRC
+@end
 * Layout
 Settings that influence how windows are positioned and sized.
 Find more information on the wiki:
 https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
-#+BEGIN_SRC kdl
+@code kdl
 layout {
     // Set gaps around windows in logical pixels.
     gaps 16
@@ -217,11 +219,11 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 // You can also set this to null to disable saving screenshots to disk.
 // screenshot-path null
-#+END_SRC
+@end
 * Animation settings.
 The wiki explains how to configure individual animations:
 https://github.com/YaLTeR/niri/wiki/Configuration:-Animations
-#+BEGIN_SRC kdl
+@code kdl
 animations {
     // Uncomment to turn off all animations.
     // off
@@ -229,12 +231,12 @@ animations {
     // Slow down all animations by this factor. Values below 1 speed them up instead.
     // slowdown 3.0
 }
-#+END_SRC
+@end
 * Window Rules
 Window rules let you adjust behavior for individual windows.
 Find more information on the wiki:
 https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
-#+BEGIN_SRC kdl
+@code kdl
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
 /-window-rule {
@@ -246,9 +248,9 @@ https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
     // Use this instead if you want them visible on third-party screenshot tools.
     // block-out-from "screencast"
 }
-#+END_SRC
+@end
 * Keybinds
-#+BEGIN_SRC kdl
+@code kdl
   binds {
       // Keys consist of modifiers separated by + signs, followed by an XKB key name
       // in the end. To find an XKB name for a particular key, you may use a program
@@ -474,4 +476,4 @@ https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
       // moving the mouse or pressing any other key.
       Mod+Shift+P { power-off-monitors; }
   }
-#+END_SRC
+@end

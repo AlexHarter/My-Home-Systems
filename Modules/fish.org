@@ -1,11 +1,11 @@
 #+title: Fish
 
 * mkdir
-#+BEGIN_SRC shell
+#+BEGIN_SRC sh
 mkdir ~/.config/fish/
 #+END_SRC
 
 * fish.config
-#+BEGIN_SRC shell :tangle ~/.config/fish/fish.config
+#+BEGIN_SRC sh :tangle ~/.config/fish/fish.config
 
 #+END_SRC

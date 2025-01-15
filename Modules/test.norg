@@ -1,5 +1,0 @@
-* Test
-#tangle test.py
-@code python
-print("Hello world!")
-@end

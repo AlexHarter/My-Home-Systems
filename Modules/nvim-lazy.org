@@ -6,7 +6,6 @@
   mkdir -p ~/.config/nvim/lua/kickstart/plugins
   emacs --eval '(org-babel-tangle ~/Projects/My-Home-Systems/Modules/nvim-lazy.org)'
 #+END_SRC
-
 * init.lua
 #+BEGIN_SRC lua :tangle ~/.config/nvim/init.lua
 --[[
@@ -1299,8 +1298,8 @@ return {
     config = true,
 }
 #+END_SRC
-**** [[https://github.com/nvim-orgmode/orgmode][org-mode.lua]]
-#+BEGIN_SRC lua :tangle ~/.config/nvim/lua/custom/plugins/org-mode.lua
+**** [[https://github.com/nvim-orgmode/orgmode][orgmode.lua]]
+#+BEGIN_SRC lua :tangle ~/.config/nvim/lua/custom/plugins/orgmode.lua
 return {
   'nvim-orgmode/orgmode',
   event = 'VeryLazy',
@@ -1354,8 +1353,8 @@ return {
   },
 }
 #+END_SRC
-**** [[https://github.com/martineausimon/nvim-lilypond-suite][nvim-lilypond-suite.lua]]
-#+BEGIN_SRC lua :tangle ~/.config/nvim/lua/custom/plugins/nvim-lilypond-suite.lua
+**** [[https://github.com/martineausimon/nvim-lilypond-suite][lilypond-suite.lua]]
+#+BEGIN_SRC lua :tangle ~/.config/nvim/lua/custom/plugins/lilypond-suite.lua
 return { 
   'martineausimon/nvim-lilypond-suite',
   config = function()
@@ -1465,8 +1464,8 @@ return {
   end
 }
 #+END_SRC
-**** [[https://gi thub.com/benlubas/molten-nvim][molten-nvim.lua]]
-#+BEGIN_SRC lua :tangle ~/.config/nvim/lua/custom/plugins/molten-nvim.lua
+**** [[https://gi thub.com/benlubas/molten-nvim][molten.lua]]
+#+BEGIN_SRC lua :tangle ~/.config/nvim/lua/custom/plugins/molten.lua
 return {
     "benlubas/molten-nvim",
     version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
@@ -1534,13 +1533,6 @@ return {
   },
 }
 #+END_SRC
-**** [[https://github.com/willothy/wezterm.nvim][wezterm.lua]]
-#+BEGIN_SRC lua :tangle ~/.config/nvim/lua/custom/plugins/wezterm.lua
-return {
-    'willothy/wezterm.nvim',
-    config = true
-}
-#+END_SRC
 **** [[https://github.com/MagicDuck/grug-far.nvim][grug-far.lua]]
 #+BEGIN_SRC lua :tangle ~/.config/nvim/lua/custom/plugins/grug-far.lua
   return {
@@ -1554,8 +1546,8 @@ return {
     end
   }
 #+END_SRC
-**** [[https://github.com/nvimdev/dashboard-nvim][dashboard-nvim.lua]]
-#+BEGIN_SRC lua :tangle ~/.config/nvim/lua/custom/plugins/dashboard-nvim.lua
+**** [[https://github.com/nvimdev/dashboard-nvim][dashboard.lua]]
+#+BEGIN_SRC lua :tangle ~/.config/nvim/lua/custom/plugins/dashboard.lua
 return {
   'nvimdev/dashboard-nvim',
   event = 'VimEnter',
@@ -1642,5 +1634,14 @@ return {
       return cmp.setup(config)
     end,
   },
+}
+#+END_SRC
+**** odin.vim
+#+BEGIN_SRC lua :tangle ~/.config/nvim/lua/custom/plugins/odin.lua
+return {
+  {
+    "Tetralux/odin.vim",
+    lazy = true,
+  }
 }
 #+END_SRC
