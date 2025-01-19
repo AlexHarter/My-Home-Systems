@@ -4,26 +4,25 @@ description:
 authors: alex
 categories: 
 created: 2024-12-19T14:32:16-0600
-updated: 2025-01-14T05:00:08-0600
+updated: 2025-01-17T04:34:02-0600
 version: 1.1.1
 @end
 
 * Setup rocks.nvim
+  - https://github.com/nvim-neorocks/rocks.nvim
 
-https://github.com/nvim-neorocks/rocks.nvim
+  @quote Requirements
+  - An up-to-date Neovim >= 0.10 installation.
+  - The git command line utility.
+  - wget or curl (if running on a UNIX system) - required for the remote :source command to work.
+  - make and unzip (if you want the install/bootstrap script to install luarocks).
+  - netrw enabled in your Neovim configuration - enabled by default but some configurations manually disable the plugin.
+  - A lua 5.1 or luajit installation, including headers (for installing native libraries). Note that luarocks expects to be able to run Lua(jit) using the lua command.
+  @end
 
-@quote
-- An up-to-date Neovim >= 0.10 installation.
-- The git command line utility.
-- wget or curl (if running on a UNIX system) - required for the remote :source command to work.
-- make and unzip (if you want the install/bootstrap script to install luarocks).
-- netrw enabled in your Neovim configuration - enabled by default but some configurations manually disable the plugin.
-- A lua 5.1 or luajit installation, including headers (for installing native libraries). Note that luarocks expects to be able to run Lua(jit) using the lua command.
-@end
-
-@code sh
-nvim -u NORC -c "source https://raw.githubusercontent.com/nvim-neorocks/rocks.nvim/master/installer.lua"
-@end
+  @code sh
+  nvim -u NORC -c "source https://raw.githubusercontent.com/nvim-neorocks/rocks.nvim/master/installer.lua"
+  @end
 
 @code lua
 local rocks_config = {

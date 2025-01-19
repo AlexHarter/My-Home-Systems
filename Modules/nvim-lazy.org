@@ -1645,3 +1645,24 @@ return {
   }
 }
 #+END_SRC
+**** unicode.lua
+#+BEGIN_SRC lua :tangle ~/.config/nvim/lua/custom/plugins/unicode.lua
+return {
+  {
+    "chrisbra/unicode.vim",
+    lazy = true,
+  }
+}
+#+END_SRC
+**** [tiny-glimmer](https://github.com/rachartier/tiny-glimmer.nvim)
+#+BEGIN_SRC lua :tangle ~/.config/nvim/lua/custom/plugins/tiny-glimmer.lua
+return {
+  {
+    "rachartier/tiny-glimmer.nvim",
+    event = "VeryLazy",
+    opts = {
+        -- your configuration
+    },
+  }
+}
+#+END_SRC
